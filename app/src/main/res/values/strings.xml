@@ -2,4 +2,9 @@
     <string name="app_name">Tubes_02</string>
     <string name="piano_tiles_blyat">PIANO TILES BLYAT !!!</string>
     <string name="play">PLAY</string>
+    <string name="score">SCORE : </string>
+    <string name="_0">0</string>
+    <string name="_3000">3000</string>
+    <string name="game_over_blyat">GAME OVER BLYAT !!</string>
+    <string name="play_again">PLAY AGAIN</string>
 </resources>
