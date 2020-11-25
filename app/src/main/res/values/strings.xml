@@ -7,4 +7,5 @@
     <string name="_3000">3000</string>
     <string name="game_over_blyat">GAME OVER BLYAT !!</string>
     <string name="play_again">PLAY AGAIN</string>
+    <string name="high_score">HIGH SCORE :</string>
 </resources>

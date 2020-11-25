@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HIGH SCORE :"
+            android:text="@string/high_score"
             android:textSize="20sp"
             android:id="@+id/hi_score_text">
 

@@ -1,26 +1,24 @@
 package com.example.tubes_02.view;
 
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.tubes_02.R;
+import com.example.tubes_02.presenter.MainMenuPresenter;
 
-//Main game fragment
+public class MainMenuFragment extends Fragment implements View.OnClickListener{
+    Button play;
+    FragmentListener fragmentListener;
+    MainMenuPresenter mainMenuPresenter; //belum ada constructor
 
-public class PianoTilesGameFragment extends Fragment implements View.OnClickListener {
-    private FragmentListener fragmentListener;
-    ImageView imageView;
-
-
-    public static PianoTilesGameFragment newInstance(String title) {
-        PianoTilesGameFragment fragment = new PianoTilesGameFragment();
+    public static MainMenuFragment newInstance(String title) {
+        MainMenuFragment fragment = new MainMenuFragment();
         Bundle args = new Bundle();
         args.putString("main_game", title);
         fragment.setArguments(args);
@@ -29,7 +27,11 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.piano_tiles_game_fragment, container, false);
+        View view = inflater.inflate(R.layout.main_menu_fragment, container, false);
+
+        this.play = view.findViewById(R.id.play);
+
+        this.play.setOnClickListener(this);
 
         return view;
     }
@@ -47,7 +49,8 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-//        Onclick goes here
+        if(v==play){
+            this.fragmentListener.changePage(2);
+        }
     }
 }
-//delete this when you receive it
