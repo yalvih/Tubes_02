@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Tubes_02</string>
+    <string name="piano_tiles_blyat">PIANO TILES BLYAT !!!</string>
+    <string name="play">PLAY</string>
 </resources>

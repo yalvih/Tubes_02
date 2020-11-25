@@ -1,8 +1,10 @@
-package com.example.tubes_02;
+package com.example.tubes_02.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.tubes_02.R;
 
 public class MainActivity extends AppCompatActivity {
 
