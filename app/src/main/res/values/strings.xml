@@ -8,4 +8,6 @@
     <string name="game_over_blyat">GAME OVER BLYAT !!</string>
     <string name="play_again">PLAY AGAIN</string>
     <string name="high_score">HIGH SCORE : </string>
+    <string name="back_to_main_menu">BACK TO MAIN MENU</string>
+    <string name="start">START</string>
 </resources>

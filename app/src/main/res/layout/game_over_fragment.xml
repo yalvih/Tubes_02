@@ -26,15 +26,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/play_again"
-            android:layout_marginRight="10dp"
-            android:id="@+id/play">
+            android:layout_marginEnd="10dp"
+            android:id="@+id/play_again">
         </Button>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/play_again"
-            android:id="@+id/play_again">
+            android:text="@string/back_to_main_menu"
+            android:id="@+id/back_to_main_menu">
         </Button>
 
     </LinearLayout>

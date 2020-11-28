@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
         this.pianoTilesGameFragment = PianoTilesGameFragment.newInstance("tiles");
         this.fragmentManager = this.getSupportFragmentManager();
 
-        changePage(1);
+        changePage(3);
     }
 
     @Override
