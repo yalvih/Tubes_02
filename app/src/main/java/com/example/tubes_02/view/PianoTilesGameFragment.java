@@ -28,6 +28,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     ImageView imageView;
     Canvas canvas;
     Bitmap mBitmap;
+    Paint paint;
     TextView score, high_score; //yang ada angkanya
     Button start;
     boolean isGameStarted; //untuk button kalau dipencet
@@ -72,7 +73,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(v == start){
-            if (!isGameStarted){
+            if (!isGameStarted) {
                 initiateGame();
                 if (v.getId() == R.id.start_game){
                     this.start.setVisibility(View.GONE);
@@ -82,7 +83,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         }
     }
 
-    public void initiateGame(){
+    public void initiateGame() {
         // 1. Create Bitmap
         this.mBitmap = Bitmap.createBitmap(imageView.getWidth(),imageView.getHeight(),Bitmap.Config.ARGB_8888);
 
@@ -98,15 +99,32 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         //THIS BELOW IS JUST DUMMY, REPLACED WITH THREAD GENERATED ANIMATED RECTANGLE FROM TOP TO BOTTOM
         //IF TOUCHES BELOW, THREAD STOPS, AND CHANGE PAGE TO GAME OVER PAGE
 
-        Paint paint = new Paint();
-        int mColorTest = ResourcesCompat.getColor(getResources(), R.color.purple_500, null) ;
-        paint.setColor(mColorTest);
+        this.paint = new Paint();
+        int mColorTest = ResourcesCompat.getColor(getResources(), R.color.black, null) ;
+        this.paint.setColor(mColorTest);
 
-        Rect rec = new Rect(10,20,100,100);
-        canvas.drawRect(rec,paint);
-        canvas.drawCircle(80,200,70, paint);
+        canvas.drawRect(new Rect(-2, 0, 2, canvas.getHeight()), paint);
+        canvas.drawRect(new Rect(canvas.getWidth() / 4 - 2, 0, canvas.getWidth() / 4 + 2, canvas.getHeight()), paint);
+        canvas.drawRect(new Rect(canvas.getWidth() / 4 * 2 - 2, 0, canvas.getWidth() / 4 * 2 + 2, canvas.getHeight()), paint);
+        canvas.drawRect(new Rect(canvas.getWidth() / 4 * 3 - 2, 0, canvas.getWidth() / 4 * 3 + 2, canvas.getHeight()), paint);
+        canvas.drawRect(new Rect(canvas.getWidth() - 2, 0, canvas.getWidth() + 2, canvas.getHeight()), paint);
+
+        //Tester tile. Just so we know how the fuck do we draw this shit
+        //Should look something like this: drawTile(...);, but what should we put as the coordinate??
+        canvas.drawRect(new Rect(canvas.getWidth() / 4 * 0,0,canvas.getWidth() / 4 * 1,400), paint);
 
         //resetCanvas
+        this.imageView.invalidate();
+    }
+
+    public void drawTile(Coordinate coordinate){
+        int left = (int) coordinate.getX() - canvas.getWidth() / 8;
+        int right = (int) coordinate.getX() + canvas.getWidth() / 8;
+        int top = (int) coordinate.getY();
+        int bottom = top + 400;
+        //this.mCanvas.drawColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
+
+        this.canvas.drawRect(new Rect(left, top, right, bottom), this.paint);
         this.imageView.invalidate();
     }
 
