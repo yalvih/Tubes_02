@@ -89,7 +89,8 @@
         android:layout_gravity="center"
         android:text="@string/start"
         android:layout_marginTop="10dp"
-        android:id="@+id/start_game">
+        android:id="@+id/start_game"
+        android:onClick="PlayBackgroundSound">
     </Button>
 
 </LinearLayout>

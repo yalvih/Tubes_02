@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/game_over_blyat"
+        android:text="@string/game_over"
         android:textSize="24sp"
         android:textAlignment="center"
         android:paddingBottom="100dp"/>
@@ -38,12 +38,5 @@
         </Button>
 
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/linus">
-
-    </ImageView>
 
 </LinearLayout>
