@@ -92,7 +92,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 
 //            this.threadList.addFirst(new CustomThread(this.handler, coordinateDir, coordinateMax, coordinateStart));
 //            this.threadList.getFirst().start();
-            this.thread = new PianoThread(threadWrapper, this.imageView.getWidth(), this.imageView.getHeight(), 1);
+            this.thread = new PianoThread(threadWrapper, this.imageView.getWidth(), this.imageView.getHeight(), 0);
             this.thread.start();
         }
     }
@@ -106,7 +106,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         this.paint = new Paint();
         this.paintClear = new Paint();
         int colorBlack = ResourcesCompat.getColor(getResources(), R.color.black, null);
-        int colorClear = ResourcesCompat.getColor(getResources(), R.color.purple_200, null);
+        int colorClear = ResourcesCompat.getColor(getResources(), R.color.blue, null);
         this.paint.setColor(colorBlack);
         this.paintClear.setColor(colorClear);
 

@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp">
-
-
+    android:padding="10dp"
+    android:background="@color/black">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -21,7 +20,10 @@
             android:paddingEnd="5sp"
             android:text="@string/score"
             android:id="@+id/score_text"
-            android:textSize="20sp">
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/arcade"
+            >
 
         </TextView>
 
@@ -31,7 +33,9 @@
             android:paddingStart="5sp"
             android:paddingEnd="5sp"
             android:text="@string/_0"
-            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/arcade"
+            android:textSize="15sp"
             android:id="@+id/score_number">
 
         </TextView>
@@ -47,7 +51,9 @@
             android:paddingStart="5sp"
             android:paddingEnd="5sp"
             android:text="@string/high_score"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/arcade"
             android:id="@+id/hi_score_text">
 
         </TextView>
@@ -58,7 +64,9 @@
             android:paddingStart="5sp"
             android:paddingEnd="5sp"
             android:text="@string/_3000"
-            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/arcade"
+            android:textSize="15sp"
             android:id="@+id/hi_score_number">
 
         </TextView>
@@ -73,13 +81,13 @@
         android:orientation="horizontal"
         android:paddingTop="10dp">
 
-        <ImageView
+        <pl.droidsonroids.gif.GifImageView
             android:id="@+id/iv_canvas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY">
 
-        </ImageView>
+        </pl.droidsonroids.gif.GifImageView>
 
     </LinearLayout>
 
@@ -88,6 +96,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/start"
+        android:textSize="17sp"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/blue"
+        android:fontFamily="@font/arcade"
         android:layout_marginTop="10dp"
         android:id="@+id/start_game"
         android:onClick="PlayBackgroundSound">

@@ -1,5 +1,6 @@
 package com.example.tubes_02.view;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,6 +11,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.tubes_02.BackgroundMusicService;
@@ -29,7 +32,18 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        //set content view AFTER ABOVE sequence (to avoid crash)
         setContentView(R.layout.activity_main);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         this.gameOverFragment = GameOverFragment.newInstance("tiles");
         this.mainMenuFragment = MainMenuFragment.newInstance("tiles");
@@ -60,6 +74,12 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
             ft.replace(R.id.fragment_container, this.settingFragment).addToBackStack(null);
         }
         ft.commit();
+    }
+
+    @Override
+    public void closeApplication() {
+        this.moveTaskToBack(true);
+        this.finish();
     }
 
     public void PlayBackgroundSound(View view) {

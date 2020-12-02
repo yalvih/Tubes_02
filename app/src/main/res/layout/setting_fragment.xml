@@ -6,7 +6,19 @@
     android:layout_weight="1"
     android:orientation="vertical"
     android:padding="20dp"
+    android:background="@color/black"
     >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/settings"
+        android:textSize="20sp"
+        android:paddingBottom="75dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/arcade"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,44 +34,22 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:text="@string/select_music"
-            android:textSize="16sp"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/arcade"
             />
 
         <Button
             android:id="@+id/settings_button_delete_all"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:backgroundTint="#e83333"
-            android:text="BFG DIVISION"
-            android:textColor="@android:color/white"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:id="@+id/settings_text_theme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center"
-            android:text="@string/dark_theme"
-            android:textSize="16sp"
-            />
-
-        <Button
-            android:id="@+id/settings_button_theme"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:backgroundTint="@color/purple_200"
-            android:textColor="@android:color/white"
+            android:textAlignment="center"
+            android:backgroundTint="@color/black"
+            android:text="@string/megaman_cut_stage"
+            android:fontFamily="@font/arcade"
+            android:textSize="12sp"
+            android:textColor="@color/blue"
             />
 
     </LinearLayout>
@@ -69,10 +59,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:layout_margin="10dp"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/red"
+        android:fontFamily="@font/arcade"
         android:text="@string/back_to_main_menu"
         android:id="@+id/back_to_main_menu">
 
     </Button>
+
+
 
 
 </LinearLayout>

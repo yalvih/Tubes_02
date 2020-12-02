@@ -19,7 +19,7 @@ import com.example.tubes_02.R;
 import com.example.tubes_02.presenter.MainMenuPresenter;
 
 public class MainMenuFragment extends Fragment implements View.OnClickListener{
-    Button play, leaderboard, settings;
+    Button play, leaderboard, settings, exit;
     FragmentListener fragmentListener;
     MainMenuPresenter mainMenuPresenter; //belum ada constructor dan logic
 
@@ -38,10 +38,12 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener{
         this.play = view.findViewById(R.id.play);
         this.leaderboard = view.findViewById(R.id.leaderboard);
         this.settings = view.findViewById(R.id.settings);
+        this.exit = view.findViewById(R.id.exit);
 
         this.play.setOnClickListener(this);
         this.leaderboard.setOnClickListener(this);
         this.settings.setOnClickListener(this);
+        this.exit.setOnClickListener(this);
 
         return view;
     }
@@ -67,6 +69,9 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener{
         }
         if(v==settings){
             this.fragmentListener.changePage(5);
+        }
+        if (v==exit){
+            this.fragmentListener.closeApplication();
         }
     }
 }
