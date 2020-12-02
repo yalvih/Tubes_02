@@ -8,7 +8,7 @@ import com.example.tubes_02.view.UIThreadedWrapper;
 public class PianoThread extends Thread {
     protected UIThreadedWrapper uiThreadedWrapper;
     protected int column;
-    protected float YIncrement = 3.0f;
+    protected float YIncrement = 1.5f;
     protected float canvasWidth;
     protected float canvasHeight;
     protected Coordinate currentPosition;
@@ -31,15 +31,13 @@ public class PianoThread extends Thread {
         this.stopped = false;
         currentPosition = new Coordinate(canvasWidth * (column * 2 + 1) / 8, -200);
 
-        while (checkValid(this.currentPosition.getY()) && !this.stopped){
+        while (checkValid(this.currentPosition.getY()) && !this.stopped) {
             try {
                 Thread.sleep(2);
                 if (!this.isClicked){
                     uiThreadedWrapper.clearTile(new Coordinate(this.currentPosition.getX(), this.currentPosition.getY()));
                 }
-
                 this.currentPosition.setY(this.currentPosition.getY() + this.YIncrement);
-
                 if (!this.isClicked){
                     uiThreadedWrapper.drawTile(new Coordinate(this.currentPosition.getX(), this.currentPosition.getY()));
                 }
@@ -49,7 +47,7 @@ public class PianoThread extends Thread {
             }
         }
 
-        if (!this.isClicked){
+        if (!this.isClicked) {
             uiThreadedWrapper.gameOver();
         }
         return;
@@ -57,8 +55,10 @@ public class PianoThread extends Thread {
 
     public void checkInput(Coordinate input) {
         if (!isClicked) {
-            if (input.getX() >= this.currentPosition.getX() - canvasWidth / 8 && input.getX() <= this.currentPosition.getX() + canvasWidth / 8){
+            if (input.getX() >= this.currentPosition.getX() - canvasWidth / 8 - 2 && input.getX() <= this.currentPosition.getX() + canvasWidth / 8 + 2){
+                Log.d("InputCheck", "x check works!");
                 if (input.getY() >= this.currentPosition.getY() - 200 && input.getY() <= this.currentPosition.getY() + 200){
+                    Log.d("InputCheck", "Clicked on the tile!");
                     this.uiThreadedWrapper.addScore();
                     this.isClicked = true;
                     uiThreadedWrapper.clearTile(new Coordinate(this.currentPosition.getX(), this.currentPosition.getY()));

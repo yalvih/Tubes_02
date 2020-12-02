@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,7 +27,7 @@ import java.util.Random;
 
 //Main game fragment
 
-public class PianoTilesGameFragment extends Fragment implements View.OnClickListener, View.OnTouchListener{
+public class PianoTilesGameFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
     private FragmentListener fragmentListener;
     ImageView imageView;
     Canvas canvas;
@@ -58,6 +59,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         this.score = view.findViewById(R.id.score_number);
         this.high_score = view.findViewById(R.id.hi_score_number);
 
+        this.imageView.setOnTouchListener(this);
         this.start.setOnClickListener(this);
         this.start.setVisibility(View.VISIBLE);
 
@@ -153,11 +155,33 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        return false;
+    public boolean onTouch(View v, MotionEvent e) {
+        switch (e.getAction() & e.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                Log.d("InputCheck", "Input works!");
+                if (isGameStarted) {
+                    Coordinate tap = new Coordinate(e.getX(), e.getY());
+                    this.thread.checkInput(tap);
+                }
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                Log.d("TouchListener", "Pointer down");
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d("TouchListener", "Up");
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                Log.d("TouchListener", "Pointer up");
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.d("TouchListener", "Move");
+                break;
+        }
+        return true;
     }
 
-    private class CustomListener extends GestureDetector.SimpleOnGestureListener{
+    /*
+    private class CustomListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onDown(MotionEvent e) {
@@ -190,6 +214,5 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         }
 
     }
-
+     */
 }
-//delete this when you receive it
