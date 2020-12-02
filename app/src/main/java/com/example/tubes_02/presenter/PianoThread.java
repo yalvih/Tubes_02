@@ -8,7 +8,7 @@ import com.example.tubes_02.view.UIThreadedWrapper;
 public class PianoThread extends Thread {
     protected UIThreadedWrapper uiThreadedWrapper;
     protected int column;
-    protected float YIncrement = 1;
+    protected float YIncrement = 3.0f;
     protected float canvasWidth;
     protected float canvasHeight;
     protected Coordinate currentPosition;

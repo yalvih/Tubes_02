@@ -123,7 +123,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 
     public void drawTile(Coordinate coordinate) {
 //        x and y offset
-        float modifierX = canvas.getWidth() / 8;
+        float modifierX = canvas.getWidth() / 8 - 2;
         float modifierY = 200;
 
         this.canvas.drawRect(coordinate.getX() - modifierX, coordinate.getY() - modifierY, coordinate.getX() + modifierX, coordinate.getY() + modifierY, this.paint);
@@ -132,7 +132,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 
     public void clearTile(Coordinate coordinate) {
 //        x and y offset
-        float modifierX = canvas.getWidth() / 8;
+        float modifierX = canvas.getWidth() / 8 - 2;
         float modifierY = 200;
 
         this.canvas.drawRect(coordinate.getX() - modifierX, coordinate.getY() - modifierY, coordinate.getX() + modifierX, coordinate.getY() + modifierY, this.paintClear);
@@ -146,6 +146,8 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     }
 
     public void gameOver() {
+        this.thread.stopThread();
+        this.fragmentListener.changePage(3);
 //        this.penalty += 1;
 //        this.bind.penaltyText.setText(Integer.toString(this.penalty));
     }
