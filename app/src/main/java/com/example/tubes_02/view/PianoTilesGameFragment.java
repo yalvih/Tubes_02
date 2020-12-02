@@ -20,6 +20,9 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.tubes_02.R;
+import com.example.tubes_02.presenter.PianoThread;
+
+import java.util.Random;
 
 //Main game fragment
 
@@ -28,10 +31,14 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     ImageView imageView;
     Canvas canvas;
     Bitmap mBitmap;
-    Paint paint;
+    Paint paint, paintClear;
     TextView score, high_score; //yang ada angkanya
     Button start;
     boolean isGameStarted; //untuk button kalau dipencet
+
+    // Dummy - both should probably be in MainActivity.java
+    UIThreadedWrapper threadWrapper;
+    PianoThread thread;
 
     public static PianoTilesGameFragment newInstance(String title) {
         PianoTilesGameFragment fragment = new PianoTilesGameFragment();
@@ -45,13 +52,13 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.piano_tiles_game_fragment, container, false);
 
+        this.threadWrapper = new UIThreadedWrapper(this);
         this.start = view.findViewById(R.id.start_game);
         this.imageView = view.findViewById(R.id.iv_canvas);
         this.score = view.findViewById(R.id.score_number);
         this.high_score = view.findViewById(R.id.hi_score_number);
 
         this.start.setOnClickListener(this);
-
         this.start.setVisibility(View.VISIBLE);
 
         this.isGameStarted = false;
@@ -72,7 +79,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(v == start){
+        if (v == start) {
             if (!isGameStarted) {
                 initiateGame();
                 if (v.getId() == R.id.start_game){
@@ -80,52 +87,67 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
                 }
                 isGameStarted = true;
             }
+
+//            this.threadList.addFirst(new CustomThread(this.handler, coordinateDir, coordinateMax, coordinateStart));
+//            this.threadList.getFirst().start();
+            this.thread = new PianoThread(threadWrapper, this.imageView.getWidth(), this.imageView.getHeight(), 1);
+            this.thread.start();
         }
     }
 
     public void initiateGame() {
-        // 1. Create Bitmap
-        this.mBitmap = Bitmap.createBitmap(imageView.getWidth(),imageView.getHeight(),Bitmap.Config.ARGB_8888);
-
-        // 2. Associate the bitmap to the ImageView.
+        this.mBitmap = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
         this.imageView.setImageBitmap(mBitmap);
-
-        // 3. Create a Canvas with the bitmap.
         this.canvas = new Canvas(this.mBitmap);
 
-        int mColorBackground = ResourcesCompat.getColor(getResources(), R.color.purple_200,null);
-        canvas.drawColor(mColorBackground);
-
-        //THIS BELOW IS JUST DUMMY, REPLACED WITH THREAD GENERATED ANIMATED RECTANGLE FROM TOP TO BOTTOM
-        //IF TOUCHES BELOW, THREAD STOPS, AND CHANGE PAGE TO GAME OVER PAGE
-
+//        Colors
         this.paint = new Paint();
-        int mColorTest = ResourcesCompat.getColor(getResources(), R.color.black, null) ;
-        this.paint.setColor(mColorTest);
+        this.paintClear = new Paint();
+        int colorBlack = ResourcesCompat.getColor(getResources(), R.color.black, null);
+        int colorClear = ResourcesCompat.getColor(getResources(), R.color.purple_200, null);
+        this.paint.setColor(colorBlack);
+        this.paintClear.setColor(colorClear);
 
-        canvas.drawRect(new Rect(-2, 0, 2, canvas.getHeight()), paint);
-        canvas.drawRect(new Rect(canvas.getWidth() / 4 - 2, 0, canvas.getWidth() / 4 + 2, canvas.getHeight()), paint);
-        canvas.drawRect(new Rect(canvas.getWidth() / 4 * 2 - 2, 0, canvas.getWidth() / 4 * 2 + 2, canvas.getHeight()), paint);
-        canvas.drawRect(new Rect(canvas.getWidth() / 4 * 3 - 2, 0, canvas.getWidth() / 4 * 3 + 2, canvas.getHeight()), paint);
-        canvas.drawRect(new Rect(canvas.getWidth() - 2, 0, canvas.getWidth() + 2, canvas.getHeight()), paint);
+//        Background and column lines
+        canvas.drawColor(colorClear);
+        for (int i = 0; i <= 4; i++) {
+            canvas.drawRect(new Rect(canvas.getWidth() / 4 * i - 2, 0, canvas.getWidth() / 4 * i+ 2, canvas.getHeight()), paint);
+        }
 
         //Tester tile. Just so we know how the fuck do we draw this shit
         //Should look something like this: drawTile(...);, but what should we put as the coordinate??
-        canvas.drawRect(new Rect(canvas.getWidth() / 4 * 0,0,canvas.getWidth() / 4 * 1,400), paint);
+//        canvas.drawRect(new Rect(canvas.getWidth() / 4 * 0,0,canvas.getWidth() / 4 * 1,400), paint);
 
-        //resetCanvas
         this.imageView.invalidate();
     }
 
-    public void drawTile(Coordinate coordinate){
-        int left = (int) coordinate.getX() - canvas.getWidth() / 8;
-        int right = (int) coordinate.getX() + canvas.getWidth() / 8;
-        int top = (int) coordinate.getY();
-        int bottom = top + 400;
-        //this.mCanvas.drawColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
+    public void drawTile(Coordinate coordinate) {
+//        x and y offset
+        float modifierX = canvas.getWidth() / 8;
+        float modifierY = 200;
 
-        this.canvas.drawRect(new Rect(left, top, right, bottom), this.paint);
+        this.canvas.drawRect(coordinate.getX() - modifierX, coordinate.getY() - modifierY, coordinate.getX() + modifierX, coordinate.getY() + modifierY, this.paint);
         this.imageView.invalidate();
+    }
+
+    public void clearTile(Coordinate coordinate) {
+//        x and y offset
+        float modifierX = canvas.getWidth() / 8;
+        float modifierY = 200;
+
+        this.canvas.drawRect(coordinate.getX() - modifierX, coordinate.getY() - modifierY, coordinate.getX() + modifierX, coordinate.getY() + modifierY, this.paintClear);
+        this.imageView.invalidate();
+    }
+
+    public void addScore() {
+        int currentScore = Integer.parseInt(this.score.getText().toString());
+        currentScore++;
+        this.score.setText(Integer.toString(currentScore));
+    }
+
+    public void gameOver() {
+//        this.penalty += 1;
+//        this.bind.penaltyText.setText(Integer.toString(this.penalty));
     }
 
     @Override

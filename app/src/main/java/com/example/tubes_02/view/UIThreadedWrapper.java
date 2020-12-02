@@ -12,27 +12,27 @@ public class UIThreadedWrapper extends Handler {
     protected final static int ADD_SCORE = 2;
     protected final static int GAME_OVER = 3;
 
-    protected MainActivity mainActivity;
+    protected PianoTilesGameFragment fragment;
 
-    public UIThreadedWrapper(MainActivity mainActivity){
-        this.mainActivity = mainActivity;
+    public UIThreadedWrapper(PianoTilesGameFragment fragment){
+        this.fragment = fragment;
     }
 
     @Override
     public void handleMessage(@NonNull Message msg) {
         if (msg.what == UIThreadedWrapper.DRAW_TILE) {
-//            Coordinate param = (Coordinate) msg.obj;
-//            this.mainActivity.setCircle(param);
+            Coordinate param = (Coordinate) msg.obj;
+            this.fragment.drawTile(param);
         }
         else if (msg.what == UIThreadedWrapper.CLEAR_TILE) {
-//            Coordinate param = (Coordinate) msg.obj;
-//            this.mainActivity.setWhiteCircle(param);
+            Coordinate param = (Coordinate) msg.obj;
+            this.fragment.clearTile(param);
         }
         else if(msg.what == UIThreadedWrapper.ADD_SCORE) {
-//            this.mainActivity.addScore();
+            this.fragment.addScore();
         }
         else if(msg.what == UIThreadedWrapper.GAME_OVER) {
-//            this.mainActivity.gameOver();
+            this.fragment.gameOver();
         }
     }
 
