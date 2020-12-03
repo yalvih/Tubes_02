@@ -92,6 +92,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 
 //            this.threadList.addFirst(new CustomThread(this.handler, coordinateDir, coordinateMax, coordinateStart));
 //            this.threadList.getFirst().start();
+            this.fragmentListener.PlayBackgroundSound(v);
             this.thread = new PianoThread(threadWrapper, this.imageView.getWidth(), this.imageView.getHeight(), 0);
             this.thread.start();
         }
