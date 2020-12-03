@@ -11,6 +11,8 @@ public class UIThreadedWrapper extends Handler {
     protected final static int CLEAR_TILE = 1;
     protected final static int ADD_SCORE = 2;
     protected final static int GAME_OVER = 3;
+    protected final static int GENERATE_TILES = 4;
+    protected final static int CLEAR_TILES = 5;
 
     protected PianoTilesGameFragment fragment;
 
@@ -33,6 +35,12 @@ public class UIThreadedWrapper extends Handler {
         }
         else if(msg.what == UIThreadedWrapper.GAME_OVER) {
             this.fragment.gameOver();
+        }
+        else if(msg.what == UIThreadedWrapper.GENERATE_TILES) {
+            this.fragment.generateTiles();
+        }
+        else if(msg.what == UIThreadedWrapper.CLEAR_TILES) {
+            this.fragment.clearList();
         }
     }
 
@@ -59,6 +67,18 @@ public class UIThreadedWrapper extends Handler {
     public void gameOver() {
         Message msg = new Message();
         msg.what = GAME_OVER;
+        this.sendMessage(msg);
+    }
+
+    public void generateTile(){
+        Message msg = new Message();
+        msg.what = GENERATE_TILES;
+        this.sendMessage(msg);
+    }
+
+    public void clearList(){
+        Message msg = new Message();
+        msg.what = CLEAR_TILES;
         this.sendMessage(msg);
     }
 }

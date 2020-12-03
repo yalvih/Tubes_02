@@ -5,22 +5,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.ActivityManager;
 import android.app.Fragment;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.example.tubes_02.BackgroundSoundService;
 import com.example.tubes_02.R;
+import com.example.tubes_02.presenter.MainActivityPresenter;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FragmentListener {
 
-    SharedPreferences sharedPreferences;
+    SharedPreferences sp;
     SharedPreferences.Editor spEditor;
     private FragmentManager fragmentManager;
     private MainMenuFragment mainMenuFragment;
@@ -28,10 +35,16 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
     private PianoTilesGameFragment pianoTilesGameFragment;
     private LeaderboardFragment leaderboardFragment;
     private SettingFragment settingFragment;
+    MainActivityPresenter mainActivityPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sp = this.getPreferences(MODE_PRIVATE);
+        spEditor = sp.edit();
+
+        new Utils(this.sp.getInt("DARK_THEME", 0));
+        Utils.setThemeOnCreate(this);
 
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -83,8 +96,21 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
     }
 
     @Override
-    public void PlayBackgroundSound(View view) {
+    public void PlayBackgroundSound() {
         Intent svc = new Intent(this, BackgroundSoundService.class);
         startService(svc);
+    }
+
+    @Override
+    public void changeToMusic(int music) {
+        if (music == 0) {
+            Utils.changeToMusic(this, Utils.MUSIC_1);
+        }
+        else if (music == 1) {
+            Utils.changeToMusic(this, Utils.MUSIC_2);
+        }
+        else {
+            Utils.changeToMusic(this, Utils.MUSIC_3);
+        }
     }
 }

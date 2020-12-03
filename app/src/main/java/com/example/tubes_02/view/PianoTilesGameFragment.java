@@ -22,6 +22,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.tubes_02.R;
 import com.example.tubes_02.presenter.PianoThread;
+import com.example.tubes_02.presenter.PianoTilesGamePresenter;
+import com.example.tubes_02.presenter.PlayThread;
 
 import java.util.Random;
 
@@ -35,11 +37,13 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     Paint paint, paintClear;
     TextView score, high_score; //yang ada angkanya
     Button start;
+    PlayThread playThread;
     boolean isGameStarted; //untuk button kalau dipencet
 
     // Dummy - both should probably be in MainActivity.java
     UIThreadedWrapper threadWrapper;
     PianoThread thread;
+    PianoTilesGamePresenter pianoTilesGamePresenter;
 
     public static PianoTilesGameFragment newInstance(String title) {
         PianoTilesGameFragment fragment = new PianoTilesGameFragment();
@@ -58,6 +62,8 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         this.imageView = view.findViewById(R.id.iv_canvas);
         this.score = view.findViewById(R.id.score_number);
         this.high_score = view.findViewById(R.id.hi_score_number);
+
+        this.pianoTilesGamePresenter = new PianoTilesGamePresenter(threadWrapper,imageView);
 
         this.imageView.setOnTouchListener(this);
         this.start.setOnClickListener(this);
@@ -90,11 +96,23 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
                 isGameStarted = true;
             }
 
+            this.playThread = new PlayThread(threadWrapper);
+            playThread.start();
+
 //            this.threadList.addFirst(new CustomThread(this.handler, coordinateDir, coordinateMax, coordinateStart));
 //            this.threadList.getFirst().start();
-            this.fragmentListener.PlayBackgroundSound(v);
-            this.thread = new PianoThread(threadWrapper, this.imageView.getWidth(), this.imageView.getHeight(), 0);
-            this.thread.start();
+//            Random rnd = new Random();
+//            int random = rnd.nextInt(4);
+//            this.thread = new PianoThread(threadWrapper, this.imageView.getWidth(), this.imageView.getHeight(), random);
+//            this.thread.start();
+
+//            while(isGameStarted) {
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
         }
     }
 
@@ -103,11 +121,11 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         this.imageView.setImageBitmap(mBitmap);
         this.canvas = new Canvas(this.mBitmap);
 
-//        Colors
+        //Colors
         this.paint = new Paint();
         this.paintClear = new Paint();
-        int colorBlack = ResourcesCompat.getColor(getResources(), R.color.black, null);
-        int colorClear = ResourcesCompat.getColor(getResources(), R.color.blue, null);
+        int colorBlack = ResourcesCompat.getColor(getResources(), R.color.white, null);
+        int colorClear = ResourcesCompat.getColor(getResources(), R.color.black, null);
         this.paint.setColor(colorBlack);
         this.paintClear.setColor(colorClear);
 
@@ -148,11 +166,17 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         this.score.setText(Integer.toString(currentScore));
     }
 
+    public void generateTiles(){
+        this.pianoTilesGamePresenter.generateTiles();
+    }
+
+    public void clearList(){
+        this.pianoTilesGamePresenter.clearList();
+    }
+
     public void gameOver() {
-        this.thread.stopThread();
+        this.pianoTilesGamePresenter.gameOver(this.playThread);
         this.fragmentListener.changePage(3);
-//        this.penalty += 1;
-//        this.bind.penaltyText.setText(Integer.toString(this.penalty));
     }
 
     @Override
@@ -162,7 +186,8 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
                 Log.d("InputCheck", "Input works!");
                 if (isGameStarted) {
                     Coordinate tap = new Coordinate(e.getX(), e.getY());
-                    this.thread.checkInput(tap);
+//                    this.thread.checkInput(tap);
+                    this.pianoTilesGamePresenter.clicked(tap);
                 }
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:

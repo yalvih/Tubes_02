@@ -45,6 +45,8 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener{
         this.settings.setOnClickListener(this);
         this.exit.setOnClickListener(this);
 
+        this.fragmentListener.PlayBackgroundSound();
+
         return view;
     }
 

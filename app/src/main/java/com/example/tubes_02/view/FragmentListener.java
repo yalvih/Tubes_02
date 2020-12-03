@@ -5,5 +5,6 @@ import android.view.View;
 public interface FragmentListener {
     void changePage(int page);
     void closeApplication();
-    void PlayBackgroundSound(View view);
+    void PlayBackgroundSound();
+    void changeToMusic(int music);
 }

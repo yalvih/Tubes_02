@@ -1,6 +1,9 @@
 package com.example.tubes_02;
 
+import android.app.ActivityManager;
 import android.app.Service;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
@@ -8,8 +11,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.List;
+
 public class BackgroundSoundService extends Service {
-    MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer;
 
     @Nullable
     @Override
@@ -20,8 +25,8 @@ public class BackgroundSoundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mediaPlayer = MediaPlayer.create(this, R.raw.bfg_division);
-        mediaPlayer.setLooping(false); // Set looping
+        mediaPlayer = MediaPlayer.create(this, R.raw.music_2);
+        mediaPlayer.setLooping(true); // Set looping
         mediaPlayer.setVolume(100, 100);
     }
     public int onStartCommand(Intent intent, int flags, int startId) {
