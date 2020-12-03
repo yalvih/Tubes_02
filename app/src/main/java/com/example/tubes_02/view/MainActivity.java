@@ -15,7 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.example.tubes_02.BackgroundMusicService;
+import com.example.tubes_02.BackgroundSoundService;
 import com.example.tubes_02.R;
 
 public class MainActivity extends AppCompatActivity implements FragmentListener {
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 
     @Override
     public void PlayBackgroundSound(View view) {
-        Intent intent = new Intent(MainActivity.this, BackgroundMusicService.class);
-        startService(intent);
+        Intent svc = new Intent(this, BackgroundSoundService.class);
+        startService(svc);
     }
 }

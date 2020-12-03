@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-public class BackgroundMusicService extends Service {
+public class BackgroundSoundService extends Service {
     MediaPlayer mediaPlayer;
 
     @Nullable
@@ -21,12 +21,12 @@ public class BackgroundMusicService extends Service {
     public void onCreate() {
         super.onCreate();
         mediaPlayer = MediaPlayer.create(this, R.raw.bfg_division);
-        mediaPlayer.setLooping(true); // Set looping
+        mediaPlayer.setLooping(false); // Set looping
         mediaPlayer.setVolume(100, 100);
     }
     public int onStartCommand(Intent intent, int flags, int startId) {
         mediaPlayer.start();
-        Toast.makeText(getApplicationContext(), "Playing BFG Division in the Background",    Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Playing BFG Division in the Background", Toast.LENGTH_SHORT).show();
         return startId;
     }
 
