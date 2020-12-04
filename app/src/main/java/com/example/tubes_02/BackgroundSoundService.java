@@ -25,13 +25,13 @@ public class BackgroundSoundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mediaPlayer = MediaPlayer.create(this, R.raw.music_2);
+        mediaPlayer = MediaPlayer.create(this, R.raw.music_3);
         mediaPlayer.setLooping(true); // Set looping
         mediaPlayer.setVolume(100, 100);
     }
     public int onStartCommand(Intent intent, int flags, int startId) {
         mediaPlayer.start();
-        Toast.makeText(getApplicationContext(), "Playing BFG Division in the Background", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Playing", Toast.LENGTH_SHORT).show();
         return startId;
     }
 

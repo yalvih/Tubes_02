@@ -43,16 +43,11 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
         sp = this.getPreferences(MODE_PRIVATE);
         spEditor = sp.edit();
 
-        new Utils(this.sp.getInt("DARK_THEME", 0));
-        Utils.setThemeOnCreate(this);
+//        new Utils(this.sp.getInt("DARK_THEME", 0));
+//        Utils.setThemeOnCreate(this);
 
-        //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        //set content view AFTER ABOVE sequence (to avoid crash)
         setContentView(R.layout.activity_main);
 
         ActionBar actionBar = getSupportActionBar();

@@ -17,7 +17,7 @@ public class PlayThread extends Thread {
     public void run(){
         while(!isStop){
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1200);
                 this.uiThreadedWrapper.generateTile();
             } catch (InterruptedException e) {
                 e.printStackTrace();

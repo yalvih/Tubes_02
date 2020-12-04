@@ -3,6 +3,7 @@ package com.example.tubes_02.view;
 // Helper class for music
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +16,8 @@ public class Utils {
     public final static int MUSIC_2  = 1; //Tetris Music 02
     public final static int MUSIC_3  = 2; //Corneria Starfox
 
-    public Utils(int themeCode) {
-        this.musicCode = musicCode;
+    public Utils(int musicCode) {
+        Utils.musicCode = musicCode;
     }
 
     public static void changeToMusic(AppCompatActivity activity, int music) {
@@ -25,9 +26,10 @@ public class Utils {
         activity.startActivity(new Intent(activity, activity.getClass()));
     }
 
-    public static void setThemeOnCreate(AppCompatActivity activity) {
+    public void setThemeOnCreate() {
+
         if (musicCode == MUSIC_1) {
-//            activity.setTheme(R.style.AppTheme);
+//            MediaPlayer.create(getApplicationContext(), R.raw.music_1);
         }
         else if (musicCode == MUSIC_2) {
 //            activity.setTheme(R.style.AppTheme);

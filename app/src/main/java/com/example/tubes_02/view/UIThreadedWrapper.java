@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.tubes_02.presenter.PianoTilesGamePresenter;
+
 public class UIThreadedWrapper extends Handler {
     protected final static int DRAW_TILE = 0;
     protected final static int CLEAR_TILE = 1;
@@ -14,33 +16,44 @@ public class UIThreadedWrapper extends Handler {
     protected final static int GENERATE_TILES = 4;
     protected final static int CLEAR_TILES = 5;
 
-    protected PianoTilesGameFragment fragment;
+//    protected PianoTilesGameFragment fragment;
+    PianoTilesGamePresenter presenter;
 
-    public UIThreadedWrapper(PianoTilesGameFragment fragment){
-        this.fragment = fragment;
+//    public UIThreadedWrapper(PianoTilesGameFragment fragment){
+//        this.fragment = fragment;
+//    }
+
+    public UIThreadedWrapper(PianoTilesGamePresenter presenter){
+        this.presenter = presenter;
     }
 
     @Override
     public void handleMessage(@NonNull Message msg) {
         if (msg.what == UIThreadedWrapper.DRAW_TILE) {
             Coordinate param = (Coordinate) msg.obj;
-            this.fragment.drawTile(param);
+//            this.fragment.drawTile(param);
+            this.presenter.drawTile(param);
         }
         else if (msg.what == UIThreadedWrapper.CLEAR_TILE) {
             Coordinate param = (Coordinate) msg.obj;
-            this.fragment.clearTile(param);
+//            this.fragment.clearTile(param);
+            this.presenter.clearTile(param);
         }
         else if(msg.what == UIThreadedWrapper.ADD_SCORE) {
-            this.fragment.addScore();
+//            this.fragment.addScore();
+            this.presenter.addScore();
         }
         else if(msg.what == UIThreadedWrapper.GAME_OVER) {
-            this.fragment.gameOver();
+//            this.fragment.gameOver();
+            this.presenter.gameOver();
         }
         else if(msg.what == UIThreadedWrapper.GENERATE_TILES) {
-            this.fragment.generateTiles();
+//            this.fragment.generateTiles();
+            this.presenter.generateTiles();
         }
         else if(msg.what == UIThreadedWrapper.CLEAR_TILES) {
-            this.fragment.clearList();
+//            this.fragment.clearList();
+            this.presenter.clearList();
         }
     }
 

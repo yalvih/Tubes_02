@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/play"
             android:id="@+id/play"
+            android:textColor="@color/white"
             android:backgroundTint="@color/black"
             android:fontFamily="@font/arcade">
         </Button>
@@ -48,6 +49,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:text="@string/leaderboard"
             android:id="@+id/leaderboard"
             android:backgroundTint="@color/black"
@@ -58,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings"
+            android:textColor="@color/white"
             android:id="@+id/settings"
             android:backgroundTint="@color/black"
             android:fontFamily="@font/arcade">

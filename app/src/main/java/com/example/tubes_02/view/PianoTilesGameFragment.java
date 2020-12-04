@@ -29,7 +29,7 @@ import java.util.Random;
 
 //Main game fragment
 
-public class PianoTilesGameFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
+public class PianoTilesGameFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, PianoTilesGamePresenter.IPianoTilesGame {
     private FragmentListener fragmentListener;
     ImageView imageView;
     Canvas canvas;
@@ -39,8 +39,6 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     Button start;
     PlayThread playThread;
     boolean isGameStarted; //untuk button kalau dipencet
-
-    // Dummy - both should probably be in MainActivity.java
     UIThreadedWrapper threadWrapper;
     PianoThread thread;
     PianoTilesGamePresenter pianoTilesGamePresenter;
@@ -57,13 +55,13 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.piano_tiles_game_fragment, container, false);
 
-        this.threadWrapper = new UIThreadedWrapper(this);
         this.start = view.findViewById(R.id.start_game);
         this.imageView = view.findViewById(R.id.iv_canvas);
         this.score = view.findViewById(R.id.score_number);
         this.high_score = view.findViewById(R.id.hi_score_number);
 
-        this.pianoTilesGamePresenter = new PianoTilesGamePresenter(threadWrapper,imageView);
+        this.pianoTilesGamePresenter = new PianoTilesGamePresenter(imageView,this);
+//        this.threadWrapper = new UIThreadedWrapper(pianoTilesGamePresenter);
 
         this.imageView.setOnTouchListener(this);
         this.start.setOnClickListener(this);
@@ -89,15 +87,12 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         if (v == start) {
             if (!isGameStarted) {
-                initiateGame();
+                this.pianoTilesGamePresenter.initiateGame();
                 if (v.getId() == R.id.start_game){
                     this.start.setVisibility(View.GONE);
                 }
                 isGameStarted = true;
             }
-
-            this.playThread = new PlayThread(threadWrapper);
-            playThread.start();
 
 //            this.threadList.addFirst(new CustomThread(this.handler, coordinateDir, coordinateMax, coordinateStart));
 //            this.threadList.getFirst().start();
@@ -114,69 +109,6 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 //                }
 //            }
         }
-    }
-
-    public void initiateGame() {
-        this.mBitmap = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
-        this.imageView.setImageBitmap(mBitmap);
-        this.canvas = new Canvas(this.mBitmap);
-
-        //Colors
-        this.paint = new Paint();
-        this.paintClear = new Paint();
-        int colorBlack = ResourcesCompat.getColor(getResources(), R.color.white, null);
-        int colorClear = ResourcesCompat.getColor(getResources(), R.color.black, null);
-        this.paint.setColor(colorBlack);
-        this.paintClear.setColor(colorClear);
-
-//        Background and column lines
-        canvas.drawColor(colorClear);
-        for (int i = 0; i <= 4; i++) {
-            canvas.drawRect(new Rect(canvas.getWidth() / 4 * i - 2, 0, canvas.getWidth() / 4 * i+ 2, canvas.getHeight()), paint);
-        }
-
-        //Tester tile. Just so we know how the fuck do we draw this shit
-        //Should look something like this: drawTile(...);, but what should we put as the coordinate??
-//        canvas.drawRect(new Rect(canvas.getWidth() / 4 * 0,0,canvas.getWidth() / 4 * 1,400), paint);
-
-        this.imageView.invalidate();
-    }
-
-    public void drawTile(Coordinate coordinate) {
-//        x and y offset
-        float modifierX = canvas.getWidth() / 8 - 2;
-        float modifierY = 200;
-
-        this.canvas.drawRect(coordinate.getX() - modifierX, coordinate.getY() - modifierY, coordinate.getX() + modifierX, coordinate.getY() + modifierY, this.paint);
-        this.imageView.invalidate();
-    }
-
-    public void clearTile(Coordinate coordinate) {
-//        x and y offset
-        float modifierX = canvas.getWidth() / 8 - 2;
-        float modifierY = 200;
-
-        this.canvas.drawRect(coordinate.getX() - modifierX, coordinate.getY() - modifierY, coordinate.getX() + modifierX, coordinate.getY() + modifierY, this.paintClear);
-        this.imageView.invalidate();
-    }
-
-    public void addScore() {
-        int currentScore = Integer.parseInt(this.score.getText().toString());
-        currentScore++;
-        this.score.setText(Integer.toString(currentScore));
-    }
-
-    public void generateTiles(){
-        this.pianoTilesGamePresenter.generateTiles();
-    }
-
-    public void clearList(){
-        this.pianoTilesGamePresenter.clearList();
-    }
-
-    public void gameOver() {
-        this.pianoTilesGamePresenter.gameOver(this.playThread);
-        this.fragmentListener.changePage(3);
     }
 
     @Override
@@ -204,6 +136,48 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
                 break;
         }
         return true;
+    }
+
+//    public void generateTiles(){
+//        this.pianoTilesGamePresenter.generateTiles();
+//    }
+//
+//    public void clearList(){
+//        this.pianoTilesGamePresenter.clearList();
+//    }
+//
+//    public void gameOver() {
+//        this.pianoTilesGamePresenter.gameOver(this.playThread);
+//        this.fragmentListener.changePage(3);
+//    }
+
+    @Override
+    public void createCanvas(Canvas canvas, Bitmap mBitmap) {
+        this.canvas = canvas;
+        this.mBitmap = mBitmap;
+        this.imageView.setImageBitmap(mBitmap);
+    }
+
+    @Override
+    public void drawTile(Canvas canvas) {
+        this.canvas = canvas;
+        this.imageView.invalidate();
+    }
+
+    @Override
+    public void clearTile(Canvas canvas) {
+        this.canvas = canvas;
+        this.imageView.invalidate();
+    }
+
+    @Override
+    public void addScore(int score) {
+        this.score.setText(Integer.toString(score));
+    }
+
+    @Override
+    public void changePage(int page) {
+        this.fragmentListener.changePage(page);
     }
 
     /*
@@ -241,4 +215,65 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 
     }
      */
+
+    //    public void initiateGame() {
+//        this.mBitmap = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
+//        this.imageView.setImageBitmap(mBitmap);
+//        this.canvas = new Canvas(this.mBitmap);
+//
+//        //Colors
+//        this.paint = new Paint();
+//        this.paintClear = new Paint();
+//        int colorBlack = ResourcesCompat.getColor(getResources(), R.color.white, null);
+//        int colorClear = ResourcesCompat.getColor(getResources(), R.color.black, null);
+//        this.paint.setColor(colorBlack);
+//        this.paintClear.setColor(colorClear);
+//
+////        Background and column lines
+//        canvas.drawColor(colorClear);
+//        for (int i = 0; i <= 4; i++) {
+//            canvas.drawRect(new Rect(canvas.getWidth() / 4 * i - 2, 0, canvas.getWidth() / 4 * i+ 2, canvas.getHeight()), paint);
+//        }
+//
+//        //Tester tile. Just so we know how the fuck do we draw this shit
+//        //Should look something like this: drawTile(...);, but what should we put as the coordinate??
+////        canvas.drawRect(new Rect(canvas.getWidth() / 4 * 0,0,canvas.getWidth() / 4 * 1,400), paint);
+//
+//        this.imageView.invalidate();
+//    }
+
+
+
+
+
+
+//        public void drawTile(Coordinate coordinate) {
+////        x and y offset
+//        float modifierX = canvas.getWidth() / 8 - 2;
+//        float modifierY = 200;
+//
+//        this.canvas.drawRect(coordinate.getX() - modifierX, coordinate.getY() - modifierY, coordinate.getX() + modifierX, coordinate.getY() + modifierY, this.paint);
+//        this.imageView.invalidate();
+//        }
+
+
+
+
+    //    public void clearTile(Coordinate coordinate) {
+////        x and y offset
+//        float modifierX = canvas.getWidth() / 8 - 2;
+//        float modifierY = 200;
+//
+//        this.canvas.drawRect(coordinate.getX() - modifierX, coordinate.getY() - modifierY, coordinate.getX() + modifierX, coordinate.getY() + modifierY, this.paintClear);
+//        this.imageView.invalidate();
+//    }
+
+
+
+
+    //    public void addScore() {
+//        int currentScore = Integer.parseInt(this.score.getText().toString());
+//        currentScore++;
+//        this.score.setText(Integer.toString(currentScore));
+//    }
 }

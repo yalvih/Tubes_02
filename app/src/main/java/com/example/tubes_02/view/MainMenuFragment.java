@@ -21,7 +21,7 @@ import com.example.tubes_02.presenter.MainMenuPresenter;
 public class MainMenuFragment extends Fragment implements View.OnClickListener{
     Button play, leaderboard, settings, exit;
     FragmentListener fragmentListener;
-    MainMenuPresenter mainMenuPresenter; //belum ada constructor dan logic
+    MainMenuPresenter mainMenuPresenter;
 
     public static MainMenuFragment newInstance(String title) {
         MainMenuFragment fragment = new MainMenuFragment();
