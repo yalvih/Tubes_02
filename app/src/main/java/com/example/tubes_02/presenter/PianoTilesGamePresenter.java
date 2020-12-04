@@ -75,6 +75,9 @@ public class PianoTilesGamePresenter {
     }
 
     public void gameOver(){
+        for (int i = 0; i < listTiles.size(); i++) {
+            this.listTiles.get(i).stopThread();
+        }
         this.playThread.stopThread();
         this.iPianoTilesGame.changePage(3);
     }
@@ -112,7 +115,7 @@ public class PianoTilesGamePresenter {
 
     public void clearTile(Coordinate coordinate) {
         float modifierX = canvas.getWidth() / 8 - 2;
-        float modifierY = 200;
+        float modifierY = 202;
 
         this.canvas.drawRect(coordinate.getX() - modifierX, coordinate.getY() - modifierY, coordinate.getX() + modifierX, coordinate.getY() + modifierY, this.paintClear);
         this.iPianoTilesGame.clearTile(this.canvas);

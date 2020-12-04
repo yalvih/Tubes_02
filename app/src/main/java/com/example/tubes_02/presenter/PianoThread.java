@@ -8,7 +8,10 @@ import com.example.tubes_02.view.UIThreadedWrapper;
 public class PianoThread extends Thread {
     protected UIThreadedWrapper uiThreadedWrapper;
     protected int column;
-    protected float YIncrement = 1.5f;
+//  Easy  : 1.0f
+//  Normal:
+//  Hard  : 4.0f;
+    protected float YIncrement = 4.0f;
     protected float canvasWidth;
     protected float canvasHeight;
     protected Coordinate currentPosition;
@@ -28,19 +31,14 @@ public class PianoThread extends Thread {
     }
 
     public void run() {
-        this.stopped = false;
         currentPosition = new Coordinate(canvasWidth * (column * 2 + 1) / 8, -200);
 
         while (checkValid(this.currentPosition.getY()) && !this.stopped) {
             try {
                 Thread.sleep(2);
-                if (!this.isClicked){
-                    uiThreadedWrapper.clearTile(new Coordinate(this.currentPosition.getX(), this.currentPosition.getY()));
-                }
+                uiThreadedWrapper.clearTile(new Coordinate(this.currentPosition.getX(), this.currentPosition.getY()));
                 this.currentPosition.setY(this.currentPosition.getY() + this.YIncrement);
-                if (!this.isClicked){
-                    uiThreadedWrapper.drawTile(new Coordinate(this.currentPosition.getX(), this.currentPosition.getY()));
-                }
+                uiThreadedWrapper.drawTile(new Coordinate(this.currentPosition.getX(), this.currentPosition.getY()));
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
@@ -51,6 +49,8 @@ public class PianoThread extends Thread {
             uiThreadedWrapper.gameOver();
         }
 
+        uiThreadedWrapper.clearTile(new Coordinate(this.currentPosition.getX(), this.currentPosition.getY()));
+        this.uiThreadedWrapper.addScore();
         this.uiThreadedWrapper.clearList();
 
         return;
@@ -58,14 +58,12 @@ public class PianoThread extends Thread {
 
     public void checkInput(Coordinate input) {
         if (!isClicked) {
-            if (input.getX() >= this.currentPosition.getX() - canvasWidth / 8 - 2 && input.getX() <= this.currentPosition.getX() + canvasWidth / 8 + 2){
-                Log.d("InputCheck", "x check works!");
-                if (input.getY() >= this.currentPosition.getY() - 200 && input.getY() <= this.currentPosition.getY() + 200){
-                    Log.d("InputCheck", "Clicked on the tile!");
-                    this.uiThreadedWrapper.addScore();
-                    this.isClicked = true;
-                    uiThreadedWrapper.clearTile(new Coordinate(this.currentPosition.getX(), this.currentPosition.getY()));
-                }
+            if (input.getX() >= this.currentPosition.getX() - canvasWidth / 8 - 2 &&
+                    input.getX() <= this.currentPosition.getX() + canvasWidth / 8 + 2 &&
+                    input.getY() >= this.currentPosition.getY() - 200 &&
+                    input.getY() <= this.currentPosition.getY() + 200) {
+                this.isClicked = true;
+                this.stopThread();
             }
         }
     }

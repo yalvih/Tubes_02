@@ -6,18 +6,20 @@ import com.example.tubes_02.view.UIThreadedWrapper;
 
 public class PlayThread extends Thread {
 
-    boolean isStop;
+    boolean isStopped = false;
     UIThreadedWrapper uiThreadedWrapper;
 
     public PlayThread(UIThreadedWrapper uiThreadedWrapper){
         this.uiThreadedWrapper = uiThreadedWrapper;
-        this.isStop = false;
     }
 
     public void run(){
-        while(!isStop){
+        while(!isStopped){
             try {
-                Thread.sleep(1200);
+//                Easy  : 955
+//                Normal:
+//                Hard  : 225
+                Thread.sleep(225);
                 this.uiThreadedWrapper.generateTile();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -28,7 +30,7 @@ public class PlayThread extends Thread {
     }
 
     public void stopThread(){
-        this.isStop = true;
+        this.isStopped = true;
     }
 
 
