@@ -61,7 +61,6 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         this.high_score = view.findViewById(R.id.hi_score_number);
 
         this.pianoTilesGamePresenter = new PianoTilesGamePresenter(imageView,this);
-//        this.threadWrapper = new UIThreadedWrapper(pianoTilesGamePresenter);
 
         this.imageView.setOnTouchListener(this);
         this.start.setOnClickListener(this);
