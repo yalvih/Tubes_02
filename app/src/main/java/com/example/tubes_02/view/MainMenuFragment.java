@@ -15,6 +15,7 @@ import android.widget.Button;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.tubes_02.DBHandler;
 import com.example.tubes_02.R;
 import com.example.tubes_02.presenter.MainMenuPresenter;
 
@@ -22,6 +23,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener{
     Button play, leaderboard, settings, exit;
     FragmentListener fragmentListener;
     MainMenuPresenter mainMenuPresenter;
+    DBHandler dbHandler;
 
     public static MainMenuFragment newInstance(String title) {
         MainMenuFragment fragment = new MainMenuFragment();
@@ -39,6 +41,8 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener{
         this.leaderboard = view.findViewById(R.id.leaderboard);
         this.settings = view.findViewById(R.id.settings);
         this.exit = view.findViewById(R.id.exit);
+        this.dbHandler = new DBHandler(this.getActivity());
+        this.mainMenuPresenter = new MainMenuPresenter(dbHandler);
 
         this.play.setOnClickListener(this);
         this.leaderboard.setOnClickListener(this);

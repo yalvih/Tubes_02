@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.tubes_02.BackgroundSoundService;
+import com.example.tubes_02.DBHandler;
 import com.example.tubes_02.R;
 import com.example.tubes_02.presenter.MainActivityPresenter;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
     private MainMenuFragment mainMenuFragment;
     private GameOverFragment gameOverFragment;
     private PianoTilesGameFragment pianoTilesGameFragment;
+    private SubmitHSFragment highScoreFragment;
     private LeaderboardFragment leaderboardFragment;
     private SettingFragment settingFragment;
     MainActivityPresenter mainActivityPresenter;
@@ -52,10 +54,11 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
+        
         this.gameOverFragment = GameOverFragment.newInstance("tiles");
         this.mainMenuFragment = MainMenuFragment.newInstance("tiles");
         this.pianoTilesGameFragment = PianoTilesGameFragment.newInstance("tiles");
+        this.highScoreFragment = SubmitHSFragment.newInstance("tiles");
         this.leaderboardFragment = LeaderboardFragment.newInstance("tiles");
         this.settingFragment = SettingFragment.newInstance("tiles");
         this.fragmentManager = this.getSupportFragmentManager();
@@ -80,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
         }
         else if (page == 5) {
             ft.replace(R.id.fragment_container, this.settingFragment).addToBackStack(null);
+        }
+        else if (page == 6) {
+            ft.replace(R.id.fragment_container, this.highScoreFragment).addToBackStack(null);
         }
         ft.commit();
     }

@@ -17,6 +17,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     ListView listView;
     Button backMainMenu;
     FragmentListener fragmentListener;
+    LeaderboardFragmentAdapter lbAdapter;
 
     public static LeaderboardFragment newInstance(String title) {
         LeaderboardFragment fragment = new LeaderboardFragment();
@@ -31,6 +32,8 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.leaderboard_fragment, container, false);
 
         this.listView = view.findViewById(R.id.list_player);
+        this.lbAdapter = new LeaderboardFragmentAdapter(this.getContext());
+        this.listView.setAdapter(this.lbAdapter);
         this.backMainMenu = view.findViewById(R.id.back_to_main_menu);
 
         this.backMainMenu.setOnClickListener(this);
@@ -51,7 +54,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if(v==backMainMenu){
+        if(v == backMainMenu){
             this.fragmentListener.changePage(1);
         }
     }

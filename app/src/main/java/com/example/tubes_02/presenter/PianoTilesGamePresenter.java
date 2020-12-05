@@ -9,39 +9,37 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.res.ResourcesCompat;
-
-import com.example.tubes_02.R;
+import com.example.tubes_02.DBHandler;
+import com.example.tubes_02.model.Player;
 import com.example.tubes_02.view.Coordinate;
-import com.example.tubes_02.view.FragmentListener;
-import com.example.tubes_02.view.PianoTilesGameFragment;
 import com.example.tubes_02.view.UIThreadedWrapper;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 public class PianoTilesGamePresenter {
     public LinkedList<PianoThread> listTiles;
     public Random rnd;
+    DBHandler db;
     UIThreadedWrapper threadWrapper;
     ImageView imageView;
     Canvas canvas;
     Bitmap mBitmap;
     Paint paint, paintClear;
-    TextView score, high_score; //yang ada angkanya
     Button start;
     PlayThread playThread;
     boolean isGameStarted; //untuk button kalau dipencet
     IPianoTilesGame iPianoTilesGame;
     int currentScore = 0;
 
-    public PianoTilesGamePresenter(ImageView imageView, IPianoTilesGame iPianoTilesGame) {
+    public PianoTilesGamePresenter(IPianoTilesGame iPianoTilesGame, ImageView imageView, DBHandler db) {
         this.listTiles = new LinkedList<>();
         this.rnd = new Random();
         this.threadWrapper = new UIThreadedWrapper(this);
         this.imageView = imageView;
+        this.db = db;
         this.iPianoTilesGame = iPianoTilesGame;
+
     }
 
     public interface IPianoTilesGame{
@@ -49,7 +47,12 @@ public class PianoTilesGamePresenter {
         void drawTile(Canvas canvas);
         void clearTile(Canvas canvas);
         void addScore(int score);
+        int checkHighScore();
         void changePage(int page);
+    }
+
+    public String getHighScore() {
+        return this.db.getHighScore();
     }
 
     public void generateTiles(){
@@ -75,11 +78,18 @@ public class PianoTilesGamePresenter {
     }
 
     public void gameOver(){
-        for (int i = 0; i < listTiles.size(); i++) {
-            this.listTiles.get(i).stopThread();
+        int tiles = listTiles.size();
+        for (int i = 0; i < tiles; i++) {
+            this.listTiles.get(i).stopGameOver();
         }
         this.playThread.stopThread();
-        this.iPianoTilesGame.changePage(3);
+
+        int score = iPianoTilesGame.checkHighScore();
+        if (score != -1) {
+            this.db.addRecord(new Player(0, "Mr. Default", Integer.toString(score)));
+            this.iPianoTilesGame.changePage(6);
+        }
+        else this.iPianoTilesGame.changePage(3);
     }
 
     public void initiateGame() {

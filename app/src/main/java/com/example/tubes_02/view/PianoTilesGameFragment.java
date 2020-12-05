@@ -4,11 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,15 +13,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.tubes_02.DBHandler;
 import com.example.tubes_02.R;
 import com.example.tubes_02.presenter.PianoThread;
 import com.example.tubes_02.presenter.PianoTilesGamePresenter;
 import com.example.tubes_02.presenter.PlayThread;
-
-import java.util.Random;
 
 //Main game fragment
 
@@ -42,6 +36,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     UIThreadedWrapper threadWrapper;
     PianoThread thread;
     PianoTilesGamePresenter pianoTilesGamePresenter;
+    DBHandler dbHandler;
 
     public static PianoTilesGameFragment newInstance(String title) {
         PianoTilesGameFragment fragment = new PianoTilesGameFragment();
@@ -60,7 +55,9 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         this.score = view.findViewById(R.id.score_number);
         this.high_score = view.findViewById(R.id.hi_score_number);
 
-        this.pianoTilesGamePresenter = new PianoTilesGamePresenter(imageView,this);
+        this.dbHandler = new DBHandler(this.getActivity());
+        this.pianoTilesGamePresenter = new PianoTilesGamePresenter(this, imageView, dbHandler);
+        this.high_score.setText(this.pianoTilesGamePresenter.getHighScore());
 
         this.imageView.setOnTouchListener(this);
         this.start.setOnClickListener(this);
@@ -114,24 +111,10 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     public boolean onTouch(View v, MotionEvent e) {
         switch (e.getAction() & e.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
-                Log.d("InputCheck", "Input works!");
                 if (isGameStarted) {
                     Coordinate tap = new Coordinate(e.getX(), e.getY());
-//                    this.thread.checkInput(tap);
                     this.pianoTilesGamePresenter.clicked(tap);
                 }
-                break;
-            case MotionEvent.ACTION_POINTER_DOWN:
-                Log.d("TouchListener", "Pointer down");
-                break;
-            case MotionEvent.ACTION_UP:
-                Log.d("TouchListener", "Up");
-                break;
-            case MotionEvent.ACTION_POINTER_UP:
-                Log.d("TouchListener", "Pointer up");
-                break;
-            case MotionEvent.ACTION_MOVE:
-                Log.d("TouchListener", "Move");
                 break;
         }
         return true;
@@ -171,7 +154,12 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 
     @Override
     public void addScore(int score) {
-        this.score.setText(Integer.toString(score));
+        int currentScore = score;
+        this.score.setText(Integer.toString(currentScore));
+
+        if (currentScore > Integer.parseInt(this.high_score.getText().toString())) {
+            this.high_score.setText(Integer.toString(currentScore));
+        }
     }
 
     @Override
@@ -179,6 +167,16 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         this.fragmentListener.changePage(page);
     }
 
+    @Override
+    public int checkHighScore() {
+        int highscore = Integer.parseInt(this.pianoTilesGamePresenter.getHighScore());
+        int score = Integer.parseInt(this.score.getText().toString());
+
+        if (score > highscore) {
+            return score;
+        }
+        else return -1;
+    }
     /*
     private class CustomListener extends GestureDetector.SimpleOnGestureListener {
 

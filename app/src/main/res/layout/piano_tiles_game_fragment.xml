@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="5sp"
             android:paddingEnd="5sp"
-            android:text="@string/_3000"
+
             android:textColor="@color/white"
             android:fontFamily="@font/arcade"
             android:textSize="15sp"

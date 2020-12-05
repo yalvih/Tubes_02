@@ -49,7 +49,6 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_SCORE, player.getScore());
 
         db.insert(TABLE_PLAYER, null, values);
-        db.close();
     }
 
     public Player getPlayer(int id) {
@@ -64,10 +63,29 @@ public class DBHandler extends SQLiteOpenHelper {
         return food;
     }
 
-    public List<Player> getAllRecord() {
+    public String getHighScore() {
+        String countQuery = "SELECT * FROM " + TABLE_PLAYER + " ORDER BY " + KEY_SCORE + " DESC LIMIT 1";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        // Return high score
+        if (cursor.getCount() == 0) {
+            cursor.close();
+            return "0";
+        }
+        else {
+            if (cursor != null) {
+                cursor.moveToFirst();
+            }
+            String score = cursor.getString(2);
+            cursor.close();
+            return score;
+        }
+    }
+
+    public List<Player> getHighScores() {
         List<Player> playerList = new ArrayList<>();
         // Select all query
-        String selectQuery = "SELECT * FROM " + TABLE_PLAYER;
+        String selectQuery = "SELECT * FROM " + TABLE_PLAYER + " ORDER BY " + KEY_SCORE + " DESC LIMIT 10";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -108,6 +126,12 @@ public class DBHandler extends SQLiteOpenHelper {
         // Update row
         return db.update(TABLE_PLAYER, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(player.getId()) });
+    }
+
+    public void updateLastRecord(String name) {
+        String updateQuery = "UPDATE " + TABLE_PLAYER + " SET " + KEY_NAME + " = '" + name + "' WHERE " + KEY_ID + " = (SELECT MAX(" + KEY_ID + ") FROM " + TABLE_PLAYER + ")";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(updateQuery);
     }
 
     public void deleteAllPlayer() {

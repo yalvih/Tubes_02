@@ -11,7 +11,7 @@ public class PianoThread extends Thread {
 //  Easy  : 1.0f
 //  Normal:
 //  Hard  : 4.0f;
-    protected float YIncrement = 4.0f;
+    protected float YIncrement = 1.0f;
     protected float canvasWidth;
     protected float canvasHeight;
     protected Coordinate currentPosition;
@@ -26,12 +26,16 @@ public class PianoThread extends Thread {
     }
 
     public void stopThread() {
-        Log.d("TAG", "stopThread: ");
+        this.stopped = true;
+    }
+
+    public void stopGameOver() {
+        this.isClicked = true;
         this.stopped = true;
     }
 
     public void run() {
-        currentPosition = new Coordinate(canvasWidth * (column * 2 + 1) / 8, -200);
+        this.currentPosition = new Coordinate(canvasWidth * (column * 2 + 1) / 8, -200);
 
         while (checkValid(this.currentPosition.getY()) && !this.stopped) {
             try {
@@ -45,24 +49,24 @@ public class PianoThread extends Thread {
             }
         }
 
-        if (!this.isClicked) {
+        if (!isClicked && !this.stopped) {
             uiThreadedWrapper.gameOver();
         }
 
         uiThreadedWrapper.clearTile(new Coordinate(this.currentPosition.getX(), this.currentPosition.getY()));
-        this.uiThreadedWrapper.addScore();
         this.uiThreadedWrapper.clearList();
 
         return;
     }
 
     public void checkInput(Coordinate input) {
-        if (!isClicked) {
+        if (!isClicked && !this.stopped) {
             if (input.getX() >= this.currentPosition.getX() - canvasWidth / 8 - 2 &&
                     input.getX() <= this.currentPosition.getX() + canvasWidth / 8 + 2 &&
                     input.getY() >= this.currentPosition.getY() - 200 &&
                     input.getY() <= this.currentPosition.getY() + 200) {
                 this.isClicked = true;
+                this.uiThreadedWrapper.addScore();
                 this.stopThread();
             }
         }
