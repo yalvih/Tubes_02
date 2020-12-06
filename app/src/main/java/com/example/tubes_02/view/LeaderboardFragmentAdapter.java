@@ -28,6 +28,7 @@ public class LeaderboardFragmentAdapter extends BaseAdapter {
         this.notifyDataSetChanged();
     }
 
+
     @Override
     public int getCount(){
         return listItem.size();
@@ -42,6 +43,7 @@ public class LeaderboardFragmentAdapter extends BaseAdapter {
     public long getItemId(int i){
         return 0;
     }
+
 
     @Override
     public View getView(int i, View view, ViewGroup parent) {

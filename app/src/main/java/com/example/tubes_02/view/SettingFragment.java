@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.tubes_02.DBHandler;
 import com.example.tubes_02.R;
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
@@ -17,6 +18,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     ListView listView;
     Button backMainMenu;
     FragmentListener fragmentListener;
+    ListView lv2;
+    Button hapus;
+    LeaderboardFragmentAdapter lbAdapter;
+    DBHandler dbh;
+
 
     public static SettingFragment newInstance(String title) {
         SettingFragment fragment = new SettingFragment();
@@ -32,9 +38,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         this.listView = view.findViewById(R.id.list_player);
         this.backMainMenu = view.findViewById(R.id.back_to_main_menu);
-
+        this.hapus = view.findViewById(R.id.btn_hapus);
         this.backMainMenu.setOnClickListener(this);
-
+        this.hapus.setOnClickListener(this);
+        this.dbh = new DBHandler(this.getActivity());
         return view;
     }
 
@@ -53,6 +60,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if(v==backMainMenu){
             this.fragmentListener.changePage(1);
+        }else if(v == hapus){
+            dbh.deleteAllPlayer();
         }
     }
 }

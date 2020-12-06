@@ -53,6 +53,18 @@
             />
 
     </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/red"
+        android:fontFamily="@font/arcade"
+        android:text="@string/delete"
+        android:id="@+id/btn_hapus">
+
+    </Button>
 
     <Button
         android:layout_width="wrap_content"

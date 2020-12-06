@@ -44,7 +44,6 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         this.backMainMenu = view.findViewById(R.id.back_to_main_menu);
         this.db = new DBHandler(this.getActivity());
         this.lbPresenter = new LeaderboardFragmentPresenter(this, this.db);
-
         this.backMainMenu.setOnClickListener(this);
         this.lbPresenter.loadData();
 
