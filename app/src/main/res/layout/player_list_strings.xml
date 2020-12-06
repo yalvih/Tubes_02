@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/no_name"
-                android:textColor="@color/white"
+                android:textColor="?attr/textColor"
                 android:fontFamily="@font/arcade"
                 android:textStyle="bold"
                 android:paddingBottom="5dp"
@@ -36,8 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                
-                android:textColor="@color/white"
+
+                android:textColor="?attr/textColor"
                 android:fontFamily="@font/arcade"
                 android:textSize="16sp"
                 android:hint="@string/no_score"/>
