@@ -51,8 +51,12 @@ public class PianoTilesGamePresenter {
         void changePage(int page);
     }
 
-    public String getHighScore() {
-        return this.db.getHighScore();
+    public String getHighestScore() {
+        return this.db.getLBHighestScore();
+    }
+
+    public String getHighScoreLimit() {
+        return this.db.getLBLowestScore();
     }
 
     public void generateTiles(){
