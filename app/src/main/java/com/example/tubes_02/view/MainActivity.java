@@ -19,7 +19,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-//import com.example.tubes_02.BackgroundSoundService;
 import com.example.tubes_02.DBHandler;
 import com.example.tubes_02.R;
 import com.example.tubes_02.presenter.MainActivityPresenter;
@@ -62,9 +61,6 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.hide();
         
         this.gameOverFragment = GameOverFragment.newInstance("tiles");
         this.mainMenuFragment = MainMenuFragment.newInstance("tiles");
@@ -79,9 +75,9 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 
     @Override
     protected void onPause() {
-        if (this.isFinishing()){ //basically BACK was pressed from this activity
+        super.onPause();
+        if (this.isFinishing()){
             player.stop();
-            Toast.makeText(this, "YOU PRESSED BACK FROM YOUR 'HOME/MAIN' ACTIVITY", Toast.LENGTH_SHORT).show();
         }
         Context context = getApplicationContext();
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -90,13 +86,10 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
             ComponentName topActivity = taskInfo.get(0).topActivity;
             if (!topActivity.getPackageName().equals(context.getPackageName())) {
                 player.stop();
-                Toast.makeText(this, "YOU LEFT YOUR APP", Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(this, "YOU SWITCHED ACTIVITIES WITHIN YOUR APP", Toast.LENGTH_SHORT).show();
             }
         }
-        super.onPause();
     }
 
     @Override
@@ -108,7 +101,27 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
     @Override
     public void onResume() {
         super.onResume();
-        player.start();
+        if (musicCode == 1) {
+            player.stop();
+            player = MediaPlayer.create(this, R.raw.music_1);
+            player.setLooping(true); // Set looping
+            player.setVolume(100, 100);
+            player.start();
+        }
+        else if (musicCode == 2) {
+            player.stop();
+            player= MediaPlayer.create(this, R.raw.music_2);
+            player.setLooping(true); // Set looping
+            player.setVolume(100, 100);
+            player.start();
+        }
+        else {
+            player.stop();
+            player = MediaPlayer.create(this, R.raw.music_3);
+            player.setLooping(true); // Set looping
+            player.setVolume(100, 100);
+            player.start();
+        }
     }
 
     @Override
@@ -161,12 +174,6 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
     }
 
     @Override
-    public void PlayBackgroundSound() {
-//        Intent svc = new Intent(this, BackgroundSoundService.class);
-//        startService(svc);
-    }
-
-    @Override
     public void selectMusic() {
         musicCode++;
         if (musicCode == 4){
@@ -194,25 +201,5 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
             player.setVolume(100, 100);
             player.start();
         }
-
-//        if(this.sp_music.getInt("MUSIC", musicCode)==1){
-//            player.stop();
-//            player = MediaPlayer.create(this, R.raw.music_1);
-//            player.setLooping(true); // Set looping
-//            player.setVolume(100, 100);
-//            player.start();
-//        } else if(this.sp_music.getInt("MUSIC", musicCode)==2){
-//            player.stop();
-//            player= MediaPlayer.create(this, R.raw.music_2);
-//            player.setLooping(true); // Set looping
-//            player.setVolume(100, 100);
-//            player.start();
-//        } else if(this.sp_music.getInt("MUSIC", musicCode)==3){
-//            player.stop();
-//            player = MediaPlayer.create(this, R.raw.music_3);
-//            player.setLooping(true); // Set looping
-//            player.setVolume(100, 100);
-//            player.start();
-//        }
     }
 }

@@ -26,7 +26,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     DBHandler dbHandler; //untuk delete all data
     SharedPreferences sp, sp_music;
     SharedPreferences.Editor spEditor, spEditor_music;
-    MusicListener musicListener;
     TextView text_playing_music;
     int darkTheme, musicCode = 1;
 
@@ -105,7 +104,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         }
 
         if(v==change_music){
-            Log.d("test", "onClick: Cli");
             this.fragmentListener.selectMusic();
             musicCode++;
             if (musicCode == 1){

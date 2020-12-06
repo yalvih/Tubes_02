@@ -22,10 +22,9 @@
     <string name="hs_text_1">You made it into the leaderboard!</string>
     <string name="hs_text_2">Enter your name below:</string>
     <string name="exit">Exit</string>
-    <string name="megaman_cut_stage">Megaman - CUT STAGE</string>
     <string name="congratulations">Congratulations!</string>
     <string name="submit">Submit Score!</string>
-    <string name="change_theme">CHANGE THEME</string>
+    <string name="change_theme">LIGHT THEME</string>
     <string name="delete_leaderboard">DELETE LEADERBOARD</string>
     <string name="delete">Delete</string>
     <string name="tetris_music_01">Tetris - Music 01</string>

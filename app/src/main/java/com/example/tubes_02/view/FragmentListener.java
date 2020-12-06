@@ -6,6 +6,5 @@ public interface FragmentListener {
     void changePage(int page);
     void changeTheme(int theme);
     void closeApplication();
-    void PlayBackgroundSound();
     void selectMusic();
 }
