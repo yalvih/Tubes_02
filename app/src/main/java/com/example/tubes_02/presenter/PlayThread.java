@@ -14,6 +14,7 @@ public class PlayThread extends Thread {
     }
 
     public void run(){
+        int i = 1;
         while(!isStopped){
             try {
 //                Easy  : 955
@@ -21,6 +22,10 @@ public class PlayThread extends Thread {
 //                Hard  : 225
                 Thread.sleep(225);
                 this.uiThreadedWrapper.generateTile();
+                if (i % 25 == 0) {
+                    this.uiThreadedWrapper.generateTiltPrompt();
+                }
+                i++;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -32,8 +37,4 @@ public class PlayThread extends Thread {
     public void stopThread(){
         this.isStopped = true;
     }
-
-
-
-
 }

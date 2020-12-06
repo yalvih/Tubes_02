@@ -14,7 +14,8 @@ public class UIThreadedWrapper extends Handler {
     protected final static int ADD_SCORE = 2;
     protected final static int GAME_OVER = 3;
     protected final static int GENERATE_TILES = 4;
-    protected final static int CLEAR_TILES = 5;
+    protected final static int GENERATE_TILT_PROMPT = 5;
+    protected final static int CLEAR_TILES = 6;
 
     PianoTilesGamePresenter presenter;
 
@@ -40,6 +41,9 @@ public class UIThreadedWrapper extends Handler {
         }
         else if(msg.what == UIThreadedWrapper.GENERATE_TILES) {
             this.presenter.generateTiles();
+        }
+        else if(msg.what == UIThreadedWrapper.GENERATE_TILT_PROMPT) {
+            this.presenter.generateTiltPrompt();
         }
         else if(msg.what == UIThreadedWrapper.CLEAR_TILES) {
             this.presenter.clearList();
@@ -75,6 +79,12 @@ public class UIThreadedWrapper extends Handler {
     public void generateTile(){
         Message msg = new Message();
         msg.what = GENERATE_TILES;
+        this.sendMessage(msg);
+    }
+
+    public void generateTiltPrompt(){
+        Message msg = new Message();
+        msg.what = GENERATE_TILT_PROMPT;
         this.sendMessage(msg);
     }
 

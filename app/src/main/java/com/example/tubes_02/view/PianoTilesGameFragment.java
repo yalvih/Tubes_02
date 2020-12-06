@@ -4,7 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -23,7 +29,7 @@ import com.example.tubes_02.presenter.PlayThread;
 
 //Main game fragment
 
-public class PianoTilesGameFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, PianoTilesGamePresenter.IPianoTilesGame {
+public class PianoTilesGameFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, PianoTilesGamePresenter.IPianoTilesGame, SensorEventListener {
     private FragmentListener fragmentListener;
     ImageView imageView;
     Canvas canvas;
@@ -37,6 +43,12 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     PianoThread thread;
     PianoTilesGamePresenter pianoTilesGamePresenter;
     DBHandler dbHandler;
+    private SensorManager mSensorManager;
+    private Sensor mSensorAccelerometer;
+    private Sensor mSensorMagnetometer;
+    private float[] accelerometerData;
+    private float[] magnetometerData;
+    private final float VALUE_DRIFT = 0.5f;
 
     public static PianoTilesGameFragment newInstance(String title) {
         PianoTilesGameFragment fragment = new PianoTilesGameFragment();
@@ -59,6 +71,9 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         this.dbHandler = new DBHandler(this.getActivity());
         this.pianoTilesGamePresenter = new PianoTilesGamePresenter(this, imageView, dbHandler);
         this.high_score.setText(this.pianoTilesGamePresenter.getHighestScore());
+        this.mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        this.mSensorAccelerometer = this.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        this.mSensorMagnetometer = this.mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
         this.imageView.setOnTouchListener(this);
         this.start.setOnClickListener(this);
@@ -77,6 +92,25 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         }
         else {
             throw new ClassCastException(context.toString() + " must implement FragmentListener!");
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mSensorManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mSensorAccelerometer != null) {
+            mSensorManager.registerListener(this, mSensorAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+        if (mSensorMagnetometer != null) {
+            mSensorManager.registerListener(this, mSensorMagnetometer, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
 
@@ -135,6 +169,45 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 //    }
 
     @Override
+    public void onSensorChanged(SensorEvent event) {
+        int sensorType = event.sensor.getType();
+        switch (sensorType) {
+            case Sensor.TYPE_ACCELEROMETER:
+                this.accelerometerData = event.values.clone();
+                break;
+            case Sensor.TYPE_MAGNETIC_FIELD:
+                this.magnetometerData = event.values.clone();
+                Log.d("SensorDetect", "test");
+                break;
+        }
+
+        final float[] rotationMatrix = new float[9];
+        final float[] orientationAngles = new float[3];
+        if (accelerometerData != null && magnetometerData != null) {
+            mSensorManager.getRotationMatrix(rotationMatrix, null, accelerometerData, magnetometerData);
+            mSensorManager.getOrientation(rotationMatrix, orientationAngles);
+        }
+
+        float roll = orientationAngles[2];
+        if (Math.abs(roll) < VALUE_DRIFT) {
+            roll = 0;
+        }
+        else {
+            if (roll > 0) {
+                roll = 1;
+            }
+            else roll = -1;
+        }
+
+        this.pianoTilesGamePresenter.checkTiltPrompt(roll);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
     public void createCanvas(Canvas canvas, Bitmap mBitmap) {
         this.canvas = canvas;
         this.mBitmap = mBitmap;
@@ -145,6 +218,24 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     public void drawTile(Canvas canvas) {
         this.canvas = canvas;
         this.imageView.invalidate();
+    }
+
+    @Override
+    public void showToast(int toastCode) {
+        String text = "";
+        if (toastCode == 0) {
+            text = "Tilt left to gain extra points!";
+        }
+        else if (toastCode == 1) {
+            text = "Tilt right to gain extra points!";
+        }
+        Toast prompt = Toast.makeText(getActivity(), text, Toast.LENGTH_LONG);
+        prompt.show();
+        if (toastCode == 2) {
+            prompt.cancel();
+            Toast toast = Toast.makeText(getActivity(), "+5 points!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     @Override
@@ -178,6 +269,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
         }
         else return -1;
     }
+
     /*
     private class CustomListener extends GestureDetector.SimpleOnGestureListener {
 

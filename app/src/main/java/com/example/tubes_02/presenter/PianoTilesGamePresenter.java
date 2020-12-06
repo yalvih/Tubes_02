@@ -1,14 +1,18 @@
 package com.example.tubes_02.presenter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tubes_02.DBHandler;
 import com.example.tubes_02.model.Player;
@@ -33,6 +37,7 @@ public class PianoTilesGamePresenter {
     boolean isGameStarted; //untuk button kalau dipencet
     IPianoTilesGame iPianoTilesGame;
     int currentScore = 0;
+    int tiltCode = 99;
 
     public PianoTilesGamePresenter(IPianoTilesGame iPianoTilesGame, ImageView imageView, DBHandler db) {
         this.listTiles = new LinkedList<>();
@@ -41,12 +46,12 @@ public class PianoTilesGamePresenter {
         this.imageView = imageView;
         this.db = db;
         this.iPianoTilesGame = iPianoTilesGame;
-
     }
 
     public interface IPianoTilesGame{
         void createCanvas(Canvas canvas, Bitmap mBitmap);
         void drawTile(Canvas canvas);
+        void showToast(int code);
         void clearTile(Canvas canvas);
         void addScore(int score);
         int checkHighScore();
@@ -68,8 +73,36 @@ public class PianoTilesGamePresenter {
         pt.start();
     }
 
+    public void generateTiltPrompt(){
+        int random = rnd.nextInt(2);
+        this.iPianoTilesGame.showToast(random);
+        this.tiltCode = random;
+    }
+
+    public void checkTiltPrompt(float rollValue){
+        if (this.tiltCode == 0) {
+            if (rollValue == -1) {
+                this.addScoreTilt();
+                this.iPianoTilesGame.showToast(2);
+                this.tiltCode = 99;
+            }
+        }
+        else if (this.tiltCode == 1) {
+            if (rollValue == 1) {
+                this.addScoreTilt();
+                this.iPianoTilesGame.showToast(2);
+                this.tiltCode = 99;
+            }
+        }
+    }
+
     public void addScore() {
         currentScore++;
+        this.iPianoTilesGame.addScore(currentScore);
+    }
+
+    public void addScoreTilt() {
+        currentScore += 5;
         this.iPianoTilesGame.addScore(currentScore);
     }
 
