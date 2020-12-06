@@ -10,6 +10,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -230,10 +231,12 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
             text = "Tilt right to gain extra points!";
         }
         Toast prompt = Toast.makeText(getActivity(), text, Toast.LENGTH_LONG);
+        prompt.setGravity(Gravity.CENTER, 0, -800);
         prompt.show();
         if (toastCode == 2) {
             prompt.cancel();
             Toast toast = Toast.makeText(getActivity(), "+5 points!", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, -800);
             toast.show();
         }
     }
