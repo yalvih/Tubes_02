@@ -64,7 +64,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public String getLBHighestScore() {
-        String countQuery = "SELECT * FROM " + TABLE_PLAYER + " ORDER BY " + KEY_SCORE + " DESC LIMIT 1";
+        String countQuery = "SELECT * FROM " + TABLE_PLAYER + " ORDER BY CAST(" + KEY_SCORE + " AS INTEGER) DESC LIMIT 1";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         // Return high score
@@ -81,7 +81,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public String getLBLowestScore() {
-        String countQuery = "SELECT * FROM " + TABLE_PLAYER + " ORDER BY " + KEY_SCORE + " ASC LIMIT 10";
+        String countQuery = "SELECT * FROM " + TABLE_PLAYER + " ORDER BY CAST(" + KEY_SCORE + " AS INTEGER) DESC LIMIT 10";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         // Return high score
@@ -90,7 +90,7 @@ public class DBHandler extends SQLiteOpenHelper {
             return "0";
         }
         else {
-            cursor.moveToFirst();
+            cursor.moveToLast();
             String score = cursor.getString(2);
             cursor.close();
             return score;

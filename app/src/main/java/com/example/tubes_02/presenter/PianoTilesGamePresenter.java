@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.example.tubes_02.DBHandler;
 import com.example.tubes_02.model.Player;
 import com.example.tubes_02.view.Coordinate;
+import com.example.tubes_02.view.MainActivity;
 import com.example.tubes_02.view.UIThreadedWrapper;
 
 import java.util.LinkedList;
@@ -62,8 +64,8 @@ public class PianoTilesGamePresenter {
     public void generateTiles(){
         int random = rnd.nextInt(4);
         PianoThread pt = new PianoThread(threadWrapper, this.imageView.getWidth(), this.imageView.getHeight(), random);
-        pt.start();
         this.listTiles.addFirst(pt);
+        pt.start();
     }
 
     public void addScore() {
@@ -82,18 +84,21 @@ public class PianoTilesGamePresenter {
     }
 
     public void gameOver(){
-        int tiles = listTiles.size();
-        for (int i = 0; i < tiles; i++) {
-            this.listTiles.get(i).stopGameOver();
-        }
-        this.playThread.stopThread();
+        if (!MainActivity.gameOver) {
+            MainActivity.gameOver = true;
+            Log.d("GameOverTest", "Appear only once pls");
+            for (int i = 0; i < listTiles.size(); i++) {
+                this.listTiles.get(i).isClicked = true;
+                this.listTiles.get(i).gameOver = true;
+            }
+            this.playThread.stopThread();
 
-        int score = iPianoTilesGame.checkHighScore();
-        if (score != -1) {
-            this.db.addRecord(new Player(0, "Mr. Default", Integer.toString(score)));
-            this.iPianoTilesGame.changePage(6);
+            int score = iPianoTilesGame.checkHighScore();
+            if (score != -1) {
+                this.db.addRecord(new Player(0, "Player", Integer.toString(score)));
+                this.iPianoTilesGame.changePage(6);
+            } else this.iPianoTilesGame.changePage(3);
         }
-        else this.iPianoTilesGame.changePage(3);
     }
 
     public void initiateGame() {

@@ -26,7 +26,7 @@ import com.example.tubes_02.presenter.MainActivityPresenter;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FragmentListener {
-
+    public static boolean gameOver = false;
     SharedPreferences sp;
     SharedPreferences.Editor spEditor;
     MediaPlayer player;

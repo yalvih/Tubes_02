@@ -79,6 +79,7 @@ public class SubmitHSFragment extends Fragment implements View.OnClickListener {
         if (v == this.submit) {
             String playerName = this.name.getText().toString();
             this.presenter.updateName(playerName);
+            this.name.setText("");
             this.fragmentListener.changePage(4);
         }
     }

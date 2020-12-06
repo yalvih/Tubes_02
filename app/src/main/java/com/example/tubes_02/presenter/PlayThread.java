@@ -19,7 +19,7 @@ public class PlayThread extends Thread {
 //                Easy  : 955
 //                Normal:
 //                Hard  : 225
-                Thread.sleep(955);
+                Thread.sleep(225);
                 this.uiThreadedWrapper.generateTile();
             } catch (InterruptedException e) {
                 e.printStackTrace();

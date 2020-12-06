@@ -3,6 +3,7 @@ package com.example.tubes_02.presenter;
 import android.util.Log;
 
 import com.example.tubes_02.view.Coordinate;
+import com.example.tubes_02.view.MainActivity;
 import com.example.tubes_02.view.UIThreadedWrapper;
 
 public class PianoThread extends Thread {
@@ -11,7 +12,7 @@ public class PianoThread extends Thread {
 //  Easy  : 1.0f
 //  Normal:
 //  Hard  : 4.0f;
-    protected float YIncrement = 1.0f;
+    protected float YIncrement = 4.0f;
     protected float canvasWidth;
     protected float canvasHeight;
     protected Coordinate currentPosition;
@@ -31,6 +32,7 @@ public class PianoThread extends Thread {
     }
 
     public void stopGameOver() {
+        this.stopped = true;
         this.gameOver = true;
     }
 
@@ -49,8 +51,10 @@ public class PianoThread extends Thread {
             }
         }
 
-        if (!this.gameOver && !isClicked) {
-            uiThreadedWrapper.gameOver();
+        if (!this.gameOver && !MainActivity.gameOver) {
+            if (!this.isClicked) {
+                uiThreadedWrapper.gameOver();
+            }
         }
 
         uiThreadedWrapper.clearTile(new Coordinate(this.currentPosition.getX(), this.currentPosition.getY()));

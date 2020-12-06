@@ -49,6 +49,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.piano_tiles_game_fragment, container, false);
+        MainActivity.gameOver = false;
 
         this.start = view.findViewById(R.id.start_game);
         this.imageView = view.findViewById(R.id.iv_canvas);
