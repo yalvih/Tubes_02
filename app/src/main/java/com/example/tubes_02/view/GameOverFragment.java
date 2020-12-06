@@ -4,6 +4,7 @@ package com.example.tubes_02.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,9 +53,19 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if(v==play_again){
-            this.fragmentListener.changePage(2);
-        } else if (v==main_menu){
+        if(v == play_again){
+            this.main_menu.setText("");
+            this.main_menu.setEnabled(false);
+            this.play_again.setEnabled(false);
+            new CountDownTimer(3000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    play_again.setText("Restarting in " + (int) Math.ceil(millisUntilFinished / 1000.0) + "...");
+                }
+                public void onFinish() {
+                    fragmentListener.changePage(2);
+                }
+            }.start();
+        } else if (v == main_menu){
             this.fragmentListener.changePage(1);
         }
     }

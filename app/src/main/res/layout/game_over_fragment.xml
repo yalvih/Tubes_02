@@ -45,8 +45,8 @@
             android:backgroundTint="?attr/fragmentBackground"
             style="?android:attr/borderlessButtonStyle"
             android:fontFamily="@font/arcade"
-            android:layout_marginEnd="10dp"
             android:id="@+id/play_again">
+
         </Button>
 
         <Button
