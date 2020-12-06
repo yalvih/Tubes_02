@@ -6,14 +6,14 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:padding="10dp"
-    android:background="@color/black">
+    android:background="?attr/fragmentBackground">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/leaderboard"
         android:textSize="24sp"
-        android:textColor="@color/white"
+        android:textColor="?attr/textColor"
         android:fontFamily="@font/arcade"
         android:layout_gravity="center"
         android:padding="20dp">
@@ -23,7 +23,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:textColor="@color/white"
+        android:textColor="?attr/textColor"
         android:fontFamily="@font/arcade"
         android:layout_weight="1"
         android:id="@+id/list_player">
@@ -33,11 +33,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="@color/white"
         android:fontFamily="@font/arcade"
-        android:backgroundTint="@color/black"
+
         android:layout_margin="10dp"
         android:text="@string/back_to_main_menu"
+        android:textColor="?attr/textColor"
+        android:backgroundTint="?attr/fragmentBackground"
+        style="?android:attr/borderlessButtonStyle"
         android:id="@+id/back_to_main_menu">
 
     </Button>

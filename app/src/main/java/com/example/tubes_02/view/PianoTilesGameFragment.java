@@ -57,7 +57,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 
         this.dbHandler = new DBHandler(this.getActivity());
         this.pianoTilesGamePresenter = new PianoTilesGamePresenter(this, imageView, dbHandler);
-        this.high_score.setText(this.pianoTilesGamePresenter.getHighScore());
+        this.high_score.setText(this.pianoTilesGamePresenter.getHighestScore());
 
         this.imageView.setOnTouchListener(this);
         this.start.setOnClickListener(this);
@@ -169,7 +169,7 @@ public class PianoTilesGameFragment extends Fragment implements View.OnClickList
 
     @Override
     public int checkHighScore() {
-        int highscore = Integer.parseInt(this.pianoTilesGamePresenter.getHighScore());
+        int highscore = Integer.parseInt(this.pianoTilesGamePresenter.getHighScoreLimit());
         int score = Integer.parseInt(this.score.getText().toString());
 
         if (score > highscore) {

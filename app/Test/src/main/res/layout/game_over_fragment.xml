@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:padding="10dp"
+    android:background="@color/black">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/game_over"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/arcade"
+        android:paddingBottom="40dp"
+        android:textAlignment="center"/>
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:src="@drawable/game_over"
+        android:scaleType="fitXY"
+        android:paddingBottom="40dp">
+
+    </pl.droidsonroids.gif.GifImageView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/play_again"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            android:fontFamily="@font/arcade"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/play_again">
+        </Button>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/arcade"
+            android:text="@string/back_to_main_menu"
+            android:id="@+id/back_to_main_menu">
+        </Button>
+
+    </LinearLayout>
+
+</LinearLayout>

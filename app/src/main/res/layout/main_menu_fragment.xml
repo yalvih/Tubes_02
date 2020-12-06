@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     tools:context=".view.MainActivity"
-    android:background="@color/black">
+    android:background="?attr/fragmentBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:textSize="24sp"
             android:textAlignment="center"
             android:paddingBottom="20dp"
-            android:textColor="@color/white"
+            android:textColor="?attr/textColor"
             android:fontFamily="@font/arcade"
             android:layout_gravity="center"
             />
@@ -41,18 +41,20 @@
             android:layout_height="wrap_content"
             android:text="@string/play"
             android:id="@+id/play"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/black"
+            style="?android:attr/borderlessButtonStyle"
+            android:textColor="?attr/textColor"
+            android:backgroundTint="?attr/fragmentBackground"
             android:fontFamily="@font/arcade">
         </Button>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="?attr/textColor"
             android:text="@string/leaderboard"
             android:id="@+id/leaderboard"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="?attr/fragmentBackground"
+            style="?android:attr/borderlessButtonStyle"
             android:fontFamily="@font/arcade">
         </Button>
 
@@ -60,9 +62,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings"
-            android:textColor="@color/white"
+            android:textColor="?attr/textColor"
             android:id="@+id/settings"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="?attr/fragmentBackground"
+            style="?android:attr/borderlessButtonStyle"
             android:fontFamily="@font/arcade">
         </Button>
 
@@ -72,7 +75,8 @@
             android:text="@string/exit"
             android:id="@+id/exit"
             android:textColor="@color/red"
-            android:backgroundTint="@color/black"
+            style="?android:attr/borderlessButtonStyle"
+            android:backgroundTint="?attr/fragmentBackground"
             android:fontFamily="@font/arcade">
 
         </Button>

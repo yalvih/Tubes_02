@@ -17,6 +17,7 @@ public class PianoThread extends Thread {
     protected Coordinate currentPosition;
     protected boolean stopped = false;
     protected boolean isClicked = false;
+    protected boolean gameOver = false;
 
     public PianoThread(UIThreadedWrapper uiThreadedWrapper, float canvasWidth, float canvasHeight, int column) {
         this.uiThreadedWrapper = uiThreadedWrapper;
@@ -30,8 +31,7 @@ public class PianoThread extends Thread {
     }
 
     public void stopGameOver() {
-        this.isClicked = true;
-        this.stopped = true;
+        this.gameOver = true;
     }
 
     public void run() {
@@ -49,7 +49,7 @@ public class PianoThread extends Thread {
             }
         }
 
-        if (!isClicked && !this.stopped) {
+        if (!this.gameOver && !isClicked) {
             uiThreadedWrapper.gameOver();
         }
 

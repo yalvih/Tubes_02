@@ -1,6 +1,6 @@
 package com.example.tubes_02.view;
 
-// Helper class for music
+// Helper class for dark mode / light mode
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -11,35 +11,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.tubes_02.R;
 
 public class Utils {
-    private static int musicCode;
-    public final static int MUSIC_1 = 0; //Tetris Music 01
-    public final static int MUSIC_2  = 1; //Tetris Music 02
-    public final static int MUSIC_3  = 2; //Corneria Starfox
+    private static int themeCode;
+    public final static int THEME_UNSET = 0;
+    public final static int THEME_LIGHT = 1;
+    public final static int THEME_DARK = 2;
 
-    public Utils(int musicCode) {
-        Utils.musicCode = musicCode;
+    public Utils(int themeCode) {
+        this.themeCode = themeCode;
     }
 
-    public static void changeToMusic(AppCompatActivity activity, int music) {
-        musicCode = music;
+    public static void changeToTheme(AppCompatActivity activity, int theme) {
+        themeCode = theme;
         activity.finish();
         activity.startActivity(new Intent(activity, activity.getClass()));
     }
 
-    public void setThemeOnCreate() {
-
-        if (musicCode == MUSIC_1) {
-//            MediaPlayer.create(getApplicationContext(), R.raw.music_1);
+    public static void setThemeOnCreate(AppCompatActivity activity) {
+        if (themeCode == THEME_UNSET) {
+            activity.setTheme(R.style.AppThemeDark);
         }
-        else if (musicCode == MUSIC_2) {
-//            activity.setTheme(R.style.AppTheme);
+        else if (themeCode == THEME_LIGHT) {
+            activity.setTheme(R.style.AppTheme);
         }
-        else if (musicCode == MUSIC_3) {
-//            activity.setTheme(R.style.AppThemeDark);
+        else if (themeCode == THEME_DARK) {
+            activity.setTheme(R.style.AppThemeDark);
         }
         else {
             Log.d("Debug", "Theme Error!");
-//            activity.setTheme(R.style.AppTheme);
+            activity.setTheme(R.style.AppTheme);
         }
     }
 }
