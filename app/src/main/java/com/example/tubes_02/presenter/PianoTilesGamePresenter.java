@@ -32,9 +32,7 @@ public class PianoTilesGamePresenter {
     Canvas canvas;
     Bitmap mBitmap;
     Paint paint, paintClear;
-    Button start;
     PlayThread playThread;
-    boolean isGameStarted; //untuk button kalau dipencet
     IPianoTilesGame iPianoTilesGame;
     int currentScore = 0;
     int tiltCode = 99;
@@ -139,7 +137,6 @@ public class PianoTilesGamePresenter {
         this.canvas = new Canvas(this.mBitmap);
         this.iPianoTilesGame.createCanvas(this.canvas,this.mBitmap);
 
-        //Colors
         this.paint = new Paint();
         this.paintClear = new Paint();
 

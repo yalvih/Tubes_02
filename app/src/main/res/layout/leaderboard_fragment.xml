@@ -26,6 +26,7 @@
         android:textColor="?attr/textColor"
         android:fontFamily="@font/arcade"
         android:layout_weight="1"
+        android:padding="10dp"
         android:id="@+id/list_player">
     </ListView>
 
@@ -34,10 +35,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/arcade"
-
         android:layout_margin="10dp"
         android:text="@string/back_to_main_menu"
-        android:textColor="?attr/textColor"
+        android:textColor="@color/red"
         android:backgroundTint="?attr/fragmentBackground"
         style="?android:attr/borderlessButtonStyle"
         android:id="@+id/back_to_main_menu">

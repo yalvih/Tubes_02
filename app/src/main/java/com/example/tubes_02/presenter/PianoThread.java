@@ -9,9 +9,9 @@ import com.example.tubes_02.view.UIThreadedWrapper;
 public class PianoThread extends Thread {
     protected UIThreadedWrapper uiThreadedWrapper;
     protected int column;
-//  Easy  : 1.0f
-//  Normal:
-//  Hard  : 4.0f;
+    //  Easy  : 1.0f;
+    //  Normal: 2.5f;
+    //  Hard  : 4.0f;
     protected float YIncrement = 4.0f;
     protected float canvasWidth;
     protected float canvasHeight;
@@ -29,11 +29,6 @@ public class PianoThread extends Thread {
 
     public void stopThread() {
         this.stopped = true;
-    }
-
-    public void stopGameOver() {
-        this.stopped = true;
-        this.gameOver = true;
     }
 
     public void run() {

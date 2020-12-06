@@ -22,7 +22,7 @@
             android:text="@string/piano_tiles"
             android:textSize="24sp"
             android:textAlignment="center"
-            android:paddingBottom="20dp"
+            android:paddingBottom="40dp"
             android:textColor="?attr/textColor"
             android:fontFamily="@font/arcade"
             android:layout_gravity="center"

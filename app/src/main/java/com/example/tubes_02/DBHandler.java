@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.example.tubes_02.model.Player;
 
@@ -49,18 +48,6 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_SCORE, player.getScore());
 
         db.insert(TABLE_PLAYER, null, values);
-    }
-
-    public Player getPlayer(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_PLAYER, new String[] {KEY_ID, KEY_NAME, KEY_SCORE}, KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null) cursor.moveToFirst();
-
-        Player food = new Player(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
-
-        return food;
     }
 
     public String getLBHighestScore() {
@@ -120,29 +107,6 @@ public class DBHandler extends SQLiteOpenHelper {
         return playerList;
     }
 
-    public int getPlayerCount() {
-        String countQuery = "SELECT * FROM " + TABLE_PLAYER;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        int count = cursor.getCount();
-        cursor.close();
-
-        // Return number of food in database
-        return count;
-    }
-
-    public int updatePlayer(Player player) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, player.getName());
-        values.put(KEY_SCORE, player.getScore());
-
-        // Update row
-        return db.update(TABLE_PLAYER, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(player.getId()) });
-    }
-
     public void updateLastRecord(String name) {
         String updateQuery = "UPDATE " + TABLE_PLAYER + " SET " + KEY_NAME + " = '" + name + "' WHERE " + KEY_ID + " = (SELECT MAX(" + KEY_ID + ") FROM " + TABLE_PLAYER + ")";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -153,13 +117,6 @@ public class DBHandler extends SQLiteOpenHelper {
         String deleteQuery = "DELETE FROM " + TABLE_PLAYER;
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(deleteQuery);
-        db.close();
-    }
-
-    public void deleteModel(Player player) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_PLAYER, KEY_ID + " = ?",
-                new String[] { String.valueOf(player.getId()) });
         db.close();
     }
 }

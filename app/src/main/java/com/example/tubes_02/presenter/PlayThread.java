@@ -18,7 +18,7 @@ public class PlayThread extends Thread {
         while(!isStopped){
             try {
 //                Easy  : 955
-//                Normal:
+//                Normal: 555
 //                Hard  : 225
                 Thread.sleep(225);
                 this.uiThreadedWrapper.generateTile();

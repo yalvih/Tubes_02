@@ -1,6 +1,9 @@
 package com.example.tubes_02.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.inputmethodservice.Keyboard;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,21 +48,6 @@ public class SubmitHSFragment extends Fragment implements View.OnClickListener {
 
         this.submit.setOnClickListener(this);
 
-//        this.start = view.findViewById(R.id.start_game);
-//        this.imageView = view.findViewById(R.id.iv_canvas);
-//        this.score = view.findViewById(R.id.score_number);
-//        this.high_score = view.findViewById(R.id.hi_score_number);
-//
-//        this.dbHandler = new DBHandler(this.getActivity());
-//        this.pianoTilesGamePresenter = new PianoTilesGamePresenter(this, imageView, dbHandler);
-//        this.high_score.setText(this.pianoTilesGamePresenter.getHighScore());
-//
-//        this.imageView.setOnTouchListener(this);
-//        this.start.setOnClickListener(this);
-//        this.start.setVisibility(View.VISIBLE);
-//
-//        this.isGameStarted = false;
-
         return view;
     }
 
@@ -81,6 +69,7 @@ public class SubmitHSFragment extends Fragment implements View.OnClickListener {
             this.presenter.updateName(playerName);
             this.name.setText("");
             this.fragmentListener.changePage(4);
+            this.fragmentListener.closeKeyboard();
         }
     }
 }

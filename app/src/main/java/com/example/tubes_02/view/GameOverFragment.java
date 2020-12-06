@@ -13,10 +13,12 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
 import com.example.tubes_02.R;
+import com.example.tubes_02.presenter.GameOverPresenter;
 
-public class GameOverFragment extends Fragment implements View.OnClickListener {
+public class GameOverFragment extends Fragment implements View.OnClickListener, GameOverPresenter.IGameOverPresenter {
     Button play_again, main_menu;
     private FragmentListener fragmentListener;
+    protected GameOverPresenter gameOverPresenter;
 
 
     public static GameOverFragment newInstance(String title) {
@@ -33,6 +35,8 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
 
         this.play_again = view.findViewById(R.id.play_again);
         this.main_menu = view.findViewById(R.id.back_to_main_menu);
+
+        this.gameOverPresenter = new GameOverPresenter(this,main_menu,play_again);
 
         this.play_again.setOnClickListener(this);
         this.main_menu.setOnClickListener(this);
@@ -54,9 +58,7 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v == play_again){
-            this.main_menu.setText("");
-            this.main_menu.setEnabled(false);
-            this.play_again.setEnabled(false);
+            this.gameOverPresenter.setPlay_again();
             new CountDownTimer(3000, 1000) {
                 public void onTick(long millisUntilFinished) {
                     play_again.setText("Restarting in " + (int) Math.ceil(millisUntilFinished / 1000.0) + "...");
@@ -70,4 +72,3 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
         }
     }
 }
-//delete this when you receive it
