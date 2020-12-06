@@ -105,13 +105,18 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         if(v==change_music){
             this.fragmentListener.selectMusic();
+
             musicCode++;
             if (musicCode == 1){
                 this.text_playing_music.setText("Tetris - Music 01");
             } else if (musicCode == 2){
-                this.text_playing_music.setText("Tetris - Music 02");
+                this.text_playing_music.setText("Mama Papa Brickolini");
             } else if (musicCode == 3){
                 this.text_playing_music.setText("Star Fox - Corneria");
+            } else if (musicCode == 4){
+                this.text_playing_music.setText("DOOM - E1M1");
+            } else if (musicCode == 5){
+                this.text_playing_music.setText("In My Kamatari");
                 musicCode = 0;
             }
         }

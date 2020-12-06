@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
     @Override
     public void selectMusic() {
         musicCode++;
-        if (musicCode == 4){
+        if (musicCode == 6){
             musicCode = 1;
         }
 
@@ -194,9 +194,23 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
             player.setVolume(100, 100);
             player.start();
         }
-        else {
+        else if (musicCode == 3){
             player.stop();
             player = MediaPlayer.create(this, R.raw.music_3);
+            player.setLooping(true); // Set looping
+            player.setVolume(100, 100);
+            player.start();
+        }
+        else if (musicCode == 4){
+            player.stop();
+            player = MediaPlayer.create(this, R.raw.music_4);
+            player.setLooping(true); // Set looping
+            player.setVolume(100, 100);
+            player.start();
+        }
+        else if (musicCode == 5){
+            player.stop();
+            player = MediaPlayer.create(this, R.raw.music_5);
             player.setLooping(true); // Set looping
             player.setVolume(100, 100);
             player.start();
