@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -6,7 +7,7 @@
     android:layout_weight="1"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="@color/black"
+    android:background="?attr/fragmentBackground"
     >
 
     <TextView
@@ -16,7 +17,7 @@
         android:text="@string/settings"
         android:textSize="20sp"
         android:paddingBottom="75dp"
-        android:textColor="@color/white"
+        android:textColor="?attr/textColor"
         android:fontFamily="@font/arcade"
         />
 
@@ -35,35 +36,106 @@
             android:layout_gravity="center"
             android:text="@string/select_music"
             android:textSize="15sp"
-            android:textColor="@color/white"
+            android:textColor="?attr/textColor"
             android:fontFamily="@font/arcade"
             />
 
         <Button
-            android:id="@+id/settings_button_delete_all"
+            android:id="@+id/change_music"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textAlignment="center"
-            android:backgroundTint="@color/black"
-            android:text="@string/megaman_cut_stage"
+            android:backgroundTint="?attr/fragmentBackground"
+            android:text="CHANGE"
             android:fontFamily="@font/arcade"
             android:textSize="12sp"
             android:textColor="@color/blue"
+            style="?android:attr/borderlessButtonStyle"
             />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        >
+
+        <TextView
+            android:id="@+id/text_change_theme"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:text="@string/change_theme"
+            android:textSize="15sp"
+            android:textColor="?attr/textColor"
+            android:fontFamily="@font/arcade"
+            />
+
+        <Button
+            android:id="@+id/change_theme"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:backgroundTint="?attr/fragmentBackground"
+            android:fontFamily="@font/arcade"
+            android:textSize="12sp"
+            android:textColor="@color/blue"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+    </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        >-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text_delete_all"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="@string/delete_leaderboard"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textColor="?attr/textColor"-->
+<!--            android:fontFamily="@font/arcade"-->
+<!--            />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/delete_all"-->
+<!--            android:layout_width="130dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:textAlignment="center"-->
+<!--            android:backgroundTint="?attr/fragmentBackground"-->
+<!--            android:fontFamily="@font/arcade"-->
+<!--            android:textSize="12sp"-->
+<!--            android:textColor="@color/red"-->
+<!--            android:text="DELETE"-->
+<!--            style="?android:attr/borderlessButtonStyle"-->
+<!--            />-->
+
+<!--    </LinearLayout>-->
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:layout_margin="10dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="?attr/fragmentBackground"
         android:textColor="@color/red"
         android:fontFamily="@font/arcade"
         android:text="@string/back_to_main_menu"
-        android:id="@+id/back_to_main_menu">
+        android:id="@+id/back_to_main_menu"
+        style="?android:attr/borderlessButtonStyle">
 
     </Button>
 

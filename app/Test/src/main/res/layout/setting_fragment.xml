@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@color/black"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/settings"
+        android:textSize="20sp"
+        android:paddingBottom="75dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/arcade"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        >
+
+        <TextView
+            android:id="@+id/settings_text_delete_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:text="@string/select_music"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/arcade"
+            />
+
+        <Button
+            android:id="@+id/settings_button_delete_all"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:backgroundTint="@color/black"
+            android:text="@string/megaman_cut_stage"
+            android:fontFamily="@font/arcade"
+            android:textSize="12sp"
+            android:textColor="@color/blue"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/red"
+        android:fontFamily="@font/arcade"
+        android:text="@string/back_to_main_menu"
+        android:id="@+id/back_to_main_menu">
+
+    </Button>
+
+
+
+
+</LinearLayout>

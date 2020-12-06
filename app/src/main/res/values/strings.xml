@@ -25,4 +25,6 @@
     <string name="megaman_cut_stage">Megaman - CUT STAGE</string>
     <string name="congratulations">Congratulations!</string>
     <string name="submit">Submit Score!</string>
+    <string name="change_theme">CHANGE THEME</string>
+    <string name="delete_leaderboard">DELETE LEADERBOARD</string>
 </resources>
