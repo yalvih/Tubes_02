@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
     SharedPreferences sp;
     SharedPreferences.Editor spEditor;
     MediaPlayer player;
+    int musicCode = 1;
     private FragmentManager fragmentManager;
     private MainMenuFragment mainMenuFragment;
     private GameOverFragment gameOverFragment;
@@ -51,10 +52,12 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 
         this.player = new MediaPlayer();
 
-        player = MediaPlayer.create(this, R.raw.music_1);
-        player.setLooping(true); // Set looping
-        player.setVolume(100, 100);
-        player.start();
+        if (musicCode==1){
+            player = MediaPlayer.create(this, R.raw.music_1);
+            player.setLooping(true); // Set looping
+            player.setVolume(100, 100);
+            player.start();
+        }
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -70,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
         this.leaderboardFragment = LeaderboardFragment.newInstance("tiles");
         this.settingFragment = SettingFragment.newInstance("tiles");
         this.fragmentManager = this.getSupportFragmentManager();
-
-
 
         changePage(1);
     }
@@ -167,5 +168,51 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 
     @Override
     public void selectMusic() {
+        musicCode++;
+        if (musicCode == 4){
+            musicCode = 1;
+        }
+
+        if (musicCode == 1) {
+            player.stop();
+            player = MediaPlayer.create(this, R.raw.music_1);
+            player.setLooping(true); // Set looping
+            player.setVolume(100, 100);
+            player.start();
+        }
+        else if (musicCode == 2) {
+            player.stop();
+            player= MediaPlayer.create(this, R.raw.music_2);
+            player.setLooping(true); // Set looping
+            player.setVolume(100, 100);
+            player.start();
+        }
+        else {
+            player.stop();
+            player = MediaPlayer.create(this, R.raw.music_3);
+            player.setLooping(true); // Set looping
+            player.setVolume(100, 100);
+            player.start();
+        }
+
+//        if(this.sp_music.getInt("MUSIC", musicCode)==1){
+//            player.stop();
+//            player = MediaPlayer.create(this, R.raw.music_1);
+//            player.setLooping(true); // Set looping
+//            player.setVolume(100, 100);
+//            player.start();
+//        } else if(this.sp_music.getInt("MUSIC", musicCode)==2){
+//            player.stop();
+//            player= MediaPlayer.create(this, R.raw.music_2);
+//            player.setLooping(true); // Set looping
+//            player.setVolume(100, 100);
+//            player.start();
+//        } else if(this.sp_music.getInt("MUSIC", musicCode)==3){
+//            player.stop();
+//            player = MediaPlayer.create(this, R.raw.music_3);
+//            player.setLooping(true); // Set looping
+//            player.setVolume(100, 100);
+//            player.start();
+//        }
     }
 }

@@ -47,7 +47,7 @@
             android:layout_gravity="center"
             android:textAlignment="center"
             android:backgroundTint="?attr/fragmentBackground"
-            android:text="CHANGE"
+            android:text="@string/change"
             android:fontFamily="@font/arcade"
             android:textSize="12sp"
             android:textColor="@color/blue"
@@ -55,6 +55,20 @@
             />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_playing_music"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/tetris_music_01"
+        android:textSize="13sp"
+        android:textColor="@color/blue"
+        android:padding="10dp"
+        android:paddingBottom="10dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/arcade"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -89,53 +103,41 @@
             />
 
     </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|bottom"
-        android:layout_margin="10dp"
-        android:backgroundTint="@color/black"
-        android:textColor="@color/red"
-        android:fontFamily="@font/arcade"
-        android:text="@string/delete"
-        android:id="@+id/btn_hapus">
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        >
 
-    </Button>
+        <TextView
+            android:id="@+id/delete_all_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:text="@string/delete_leaderboard"
+            android:textSize="15sp"
+            android:textColor="?attr/textColor"
+            android:fontFamily="@font/arcade"
+            />
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        >-->
+        <Button
+            android:id="@+id/delete_all"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:backgroundTint="?attr/fragmentBackground"
+            android:fontFamily="@font/arcade"
+            android:text="@string/delete"
+            android:textSize="12sp"
+            android:textColor="@color/red"
+            style="?android:attr/borderlessButtonStyle"
+            />
 
-<!--        <TextView-->
-<!--            android:id="@+id/text_delete_all"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:text="@string/delete_leaderboard"-->
-<!--            android:textSize="15sp"-->
-<!--            android:textColor="?attr/textColor"-->
-<!--            android:fontFamily="@font/arcade"-->
-<!--            />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/delete_all"-->
-<!--            android:layout_width="130dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:textAlignment="center"-->
-<!--            android:backgroundTint="?attr/fragmentBackground"-->
-<!--            android:fontFamily="@font/arcade"-->
-<!--            android:textSize="12sp"-->
-<!--            android:textColor="@color/red"-->
-<!--            android:text="DELETE"-->
-<!--            style="?android:attr/borderlessButtonStyle"-->
-<!--            />-->
-
-<!--    </LinearLayout>-->
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"

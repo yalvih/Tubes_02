@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -22,10 +24,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     Button backMainMenu, change_music, change_theme, delete_all;
     FragmentListener fragmentListener;
     DBHandler dbHandler; //untuk delete all data
-    SharedPreferences sp;
-    SharedPreferences.Editor spEditor;
+    SharedPreferences sp, sp_music;
+    SharedPreferences.Editor spEditor, spEditor_music;
     MusicListener musicListener;
-    int darkTheme;
+    TextView text_playing_music;
+    int darkTheme, musicCode = 1;
 
     public static SettingFragment newInstance(String title) {
         SettingFragment fragment = new SettingFragment();
@@ -42,10 +45,14 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         sp = this.getActivity().getPreferences(MODE_PRIVATE);
         spEditor = sp.edit();
 
+        sp_music = this.getActivity().getPreferences(MODE_PRIVATE);
+        spEditor_music = sp_music.edit();
+
         this.backMainMenu = view.findViewById(R.id.back_to_main_menu);
         this.change_music = view.findViewById(R.id.change_music);
         this.change_theme = view.findViewById(R.id.change_theme);
-//        this.delete_all = view.findViewById(R.id.delete_all);
+        this.delete_all = view.findViewById(R.id.delete_all);
+        this.text_playing_music = view.findViewById(R.id.text_playing_music);
 
         this.darkTheme = this.sp.getInt("DARK_THEME", 0);
         if (this.darkTheme == 2) {
@@ -56,7 +63,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         this.backMainMenu.setOnClickListener(this);
         this.change_music.setOnClickListener(this);
         this.change_theme.setOnClickListener(this);
-//        this.delete_all.setOnClickListener(this);
+        this.delete_all.setOnClickListener(this);
 
         return view;
     }
@@ -76,6 +83,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         sp = this.getActivity().getPreferences(MODE_PRIVATE);
         spEditor = sp.edit();
+
+        sp_music = this.getActivity().getPreferences(MODE_PRIVATE);
+        spEditor_music = sp_music.edit();
 
         if (v == this.change_theme) {
             if (this.darkTheme == 2) {
@@ -97,6 +107,20 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         if(v==change_music){
             Log.d("test", "onClick: Cli");
             this.fragmentListener.selectMusic();
+            musicCode++;
+            if (musicCode == 1){
+                this.text_playing_music.setText("Tetris - Music 01");
+            } else if (musicCode == 2){
+                this.text_playing_music.setText("Tetris - Music 02");
+            } else if (musicCode == 3){
+                this.text_playing_music.setText("Star Fox - Corneria");
+                musicCode = 0;
+            }
+        }
+
+        if(v==delete_all){
+            Toast.makeText(this.getActivity(),"Leaderboard has been deleted",Toast.LENGTH_SHORT).show();
+            this.dbHandler.deleteAllPlayer();
         }
     }
 }
